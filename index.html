@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>#jeminforme#jedécode#jegardelespritcritique — Méthodes d’enquête (exercices 1–19)</title>
+  <title>#jeminforme#jedécode#jegardelespritcritique — Méthodes d’enquête</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
@@ -26,7 +26,13 @@
       --cat-inv:#dff4ff;       /* bleu clair */
       --cat-lang:#e9ffe0;      /* vert clair */
       --cat-meta:#eaeaea;      /* gris */
+
       --accent:#111827;
+
+      /* Alert */
+      --warn-bg:#fff7ed;
+      --warn-line:#fed7aa;
+      --warn-ink:#9a3412;
     }
 
     *{ box-sizing:border-box; }
@@ -40,7 +46,7 @@
     header{
       background: linear-gradient(180deg, #111827, #0b1220);
       color:white;
-      padding: 1.2rem 1rem 1rem;
+      padding: 1.1rem 1rem 1rem;
       position: sticky;
       top:0;
       z-index: 50;
@@ -51,21 +57,23 @@
     .topbar{
       display:flex;
       gap:.8rem;
-      align-items:center;
+      align-items:flex-start;
       flex-wrap:wrap;
       justify-content:space-between;
     }
 
+    /* ✅ plus de "Exercices 1–19" en haut */
     h1{
       font-size: 1.05rem;
       margin:0;
-      font-weight: 700;
+      font-weight: 900;
       letter-spacing: .2px;
     }
     .subtitle{
       font-size: .85rem;
       color: rgba(255,255,255,.78);
       margin-top:.25rem;
+      max-width: 60ch;
     }
 
     .searchRow{
@@ -153,7 +161,6 @@
       .searchRow{ justify-content:flex-start; }
     }
     @media (max-width: 620px){
-      header{ position: sticky; }
       .grid{ grid-template-columns: 1fr; }
       .searchRow input{ padding:.7rem .85rem; }
       h1{ font-size: 1rem; }
@@ -168,7 +175,7 @@
       overflow:hidden;
       display:flex;
       flex-direction:column;
-      min-height: 260px;
+      min-height: 310px;
       position:relative;
     }
     .cardHeader{
@@ -182,21 +189,21 @@
     .exNo{
       font-size:.78rem;
       color: var(--muted);
-      font-weight:700;
+      font-weight:900;
       letter-spacing:.2px;
     }
     .exTitle{
       margin:.15rem 0 0;
       font-size: 1.08rem;
       line-height:1.2;
-      font-weight:800;
+      font-weight:900;
     }
 
     .badge{
       padding: .35rem .6rem;
       border-radius: 999px;
       font-size:.78rem;
-      font-weight:700;
+      font-weight:900;
       color:#111827;
       border:1px solid rgba(15,23,42,.08);
       white-space:nowrap;
@@ -227,15 +234,29 @@
       padding: .85rem .95rem 1rem;
       display:flex;
       flex-direction:column;
-      gap:.6rem;
+      gap:.65rem;
       flex:1;
     }
 
     .miniDesc{
       color: var(--muted);
       font-size:.92rem;
-      line-height:1.35;
+      line-height:1.38;
       margin:0;
+    }
+
+    .goalLine{
+      font-size:.9rem;
+      font-weight:900;
+      color:#0f172a;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding:.55rem .7rem;
+    }
+    .goalLine span{
+      color: var(--muted);
+      font-weight:800;
     }
 
     details{
@@ -246,7 +267,7 @@
     }
     summary{
       cursor:pointer;
-      font-weight:800;
+      font-weight:900;
       font-size:.9rem;
       list-style:none;
       display:flex;
@@ -269,14 +290,45 @@
       margin:.55rem 0 0;
       color: var(--ink);
       font-size:.92rem;
-      line-height:1.35;
+      line-height:1.38;
     }
     .detailText b{ font-weight:900; }
+
+    /* ✅ Points d’attention (panneau attention) */
+    .warn{
+      display:flex;
+      gap:.6rem;
+      align-items:flex-start;
+      padding:.6rem .7rem;
+      border:1px solid var(--warn-line);
+      background: var(--warn-bg);
+      border-radius: 14px;
+      color: var(--warn-ink);
+      font-size:.9rem;
+      line-height:1.35;
+      font-weight:750;
+    }
+    .warnIcon{
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      margin-top: .05rem;
+    }
+    .warnIcon svg{
+      width: 24px;
+      height: 24px;
+      stroke: var(--warn-ink);
+      fill:none;
+      stroke-width:2.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
 
     .actions{
       display:flex;
       gap:.6rem;
       margin-top:auto;
+      flex-wrap:wrap;
     }
     .btn{
       border:1px solid var(--line);
@@ -284,7 +336,7 @@
       border-radius: 999px;
       padding: .55rem .75rem;
       cursor:pointer;
-      font-weight:800;
+      font-weight:900;
       font-size:.85rem;
       color:#111827;
       display:inline-flex;
@@ -333,14 +385,14 @@
     .modalTop h2{
       margin:0;
       font-size: 1.15rem;
-      font-weight: 900;
+      font-weight: 950;
       line-height:1.2;
     }
     .modalTop .meta{
       margin-top:.2rem;
       color: var(--muted);
       font-size:.9rem;
-      font-weight:700;
+      font-weight:900;
     }
     .closeBtn{
       border:1px solid var(--line);
@@ -348,7 +400,7 @@
       border-radius: 999px;
       padding:.45rem .7rem;
       cursor:pointer;
-      font-weight:900;
+      font-weight:950;
     }
     .modalBody{
       padding: 1rem;
@@ -365,7 +417,7 @@
     .panel h3{
       margin:.1rem 0 .55rem;
       font-size: .98rem;
-      font-weight: 900;
+      font-weight: 950;
     }
     .kv{
       display:grid;
@@ -373,7 +425,7 @@
       gap:.4rem .8rem;
       align-items:start;
       font-size:.95rem;
-      line-height:1.35;
+      line-height:1.38;
     }
     @media (max-width: 620px){
       .kv{ grid-template-columns: 1fr; }
@@ -381,14 +433,14 @@
     }
     .k{
       color: var(--muted);
-      font-weight: 900;
+      font-weight: 950;
       text-transform: uppercase;
       letter-spacing:.3px;
       font-size:.78rem;
     }
     .v{
       color: var(--ink);
-      font-weight: 650;
+      font-weight: 700;
     }
 
     mark{
@@ -398,13 +450,13 @@
     }
 
     .empty{
-      margin: 1.3rem 0;
+      margin: 1.1rem 0;
       padding: 1rem;
       border: 1px dashed rgba(15,23,42,.18);
       border-radius: 18px;
       background: rgba(255,255,255,.65);
       color: var(--muted);
-      font-weight: 800;
+      font-weight: 900;
     }
   </style>
 </head>
@@ -414,12 +466,12 @@
   <div class="wrap">
     <div class="topbar">
       <div>
-        <h1>Méthodes d’enquête — Exercices 1 à 19</h1>
-        <div class="subtitle">Tuiles + recherche + catégories (couleurs) + “descriptif & exemple” en menu déroulant.</div>
+        <h1>#jeminforme #jedécode #jegardelespritcritique</h1>
+        <div class="subtitle">Une boîte à outils de terrain : chaque méthode en tuile, avec descriptif détaillé, objectifs (“pour quoi”) et points d’attention.</div>
       </div>
 
       <div class="searchRow">
-        <input id="search" type="search" placeholder="Rechercher un mot-clé (titre, descriptif, exemple, mots-clés…)" />
+        <input id="search" type="search" placeholder="Rechercher un mot-clé (titre, objectif, attention, protocole, exemple…)" />
         <button class="pill" id="clearBtn" title="Effacer la recherche">✕ Effacer</button>
       </div>
     </div>
@@ -448,11 +500,23 @@
     </div>
     <div class="modalBody">
       <div class="panel">
-        <h3>Descriptif & exemple</h3>
-        <div class="kv">
-          <div class="k">Descriptif</div><div class="v" id="mDesc"></div>
-          <div class="k">Exemple</div><div class="v" id="mExample"></div>
-        </div>
+        <h3>Descriptif (détaillé)</h3>
+        <div class="v" id="mDesc"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Exemple</h3>
+        <div class="v" id="mExample"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Objectifs (“pour quoi”)</h3>
+        <div class="v" id="mGoals"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Points d’attention</h3>
+        <div class="warn" id="mWarn"></div>
       </div>
 
       <div class="panel">
@@ -475,369 +539,440 @@
 
 <script>
   /* =========================
-     Données (Exercices 1–19)
-     =========================
-     NB: Pour les exercices 10–18, je reprends exactement l’esprit des pages que tu as envoyées.
-     Pour 1–9, j’ai mis des intitulés/protocoles “standards” (tu peux les adapter en 2 minutes).
-  */
-
+     Catégories
+     ========================= */
   const CATEGORIES = [
-    { id:"all",    label:"Toutes",      color:"#ffffff", dot:"#ffffff" },
-    { id:"obs",    label:"Observer",     varColor:"--cat-obs",   dotVar:"--cat-obs"   },
-    { id:"inter",  label:"Interroger",   varColor:"--cat-inter", dotVar:"--cat-inter" },
-    { id:"imm",    label:"S’immerger",   varColor:"--cat-imm",   dotVar:"--cat-imm"   },
-    { id:"parc",   label:"Parcours",     varColor:"--cat-parc",  dotVar:"--cat-parc"  },
-    { id:"exp",    label:"Expérimenter", varColor:"--cat-exp",   dotVar:"--cat-exp"   },
-    { id:"suivi",  label:"Suivre/Veiller", varColor:"--cat-suivi", dotVar:"--cat-suivi" },
-    { id:"inv",    label:"Inventorier/Classer", varColor:"--cat-inv", dotVar:"--cat-inv" },
-    { id:"lang",   label:"Langage",     varColor:"--cat-lang",  dotVar:"--cat-lang"  },
-    { id:"meta",   label:"Composer",    varColor:"--cat-meta",  dotVar:"--cat-meta"  },
+    { id:"all",    label:"Toutes",      dot:"#ffffff" },
+    { id:"obs",    label:"Observer",     dotVar:"--cat-obs"   },
+    { id:"inter",  label:"Interroger",   dotVar:"--cat-inter" },
+    { id:"imm",    label:"S’immerger",   dotVar:"--cat-imm"   },
+    { id:"parc",   label:"Parcours",     dotVar:"--cat-parc"  },
+    { id:"exp",    label:"Expérimenter", dotVar:"--cat-exp"   },
+    { id:"suivi",  label:"Suivre/Veiller", dotVar:"--cat-suivi" },
+    { id:"inv",    label:"Inventorier/Classer", dotVar:"--cat-inv" },
+    { id:"lang",   label:"Langage",     dotVar:"--cat-lang"  },
+    { id:"meta",   label:"Composer",    dotVar:"--cat-meta"  },
   ];
 
+  function catBadge(catId){
+    const label = CATEGORIES.find(x=>x.id===catId)?.label || "Catégorie";
+    const bg = (catId==="obs") ? "var(--cat-obs)"
+            : (catId==="inter") ? "var(--cat-inter)"
+            : (catId==="imm") ? "var(--cat-imm)"
+            : (catId==="parc") ? "var(--cat-parc)"
+            : (catId==="exp") ? "var(--cat-exp)"
+            : (catId==="suivi") ? "var(--cat-suivi)"
+            : (catId==="inv") ? "var(--cat-inv)"
+            : (catId==="lang") ? "var(--cat-lang)"
+            : "var(--cat-meta)";
+    return { label, bg };
+  }
+
+  /* =========================
+     Données (Exercices 1–19)
+     ✅ Descriptifs plus détaillés
+     ✅ Objectifs “pour quoi” renforcés
+     ✅ Points d’attention ajoutés
+     ========================= */
+
   const EX = [
-    /* 1–9 : placeholders propres (à ajuster si tu as le texte exact) */
     {
       id:1, title:"Arpentage minutieux", cat:"obs",
-      desc:"Choisir un lieu précis et y rester longtemps pour décrire finement ce qui s’y passe : formes, matières, sons, flux, usages, détails.",
-      example:"Un arrêt de bus : repérer les micro-gestes (attente, regards, distances), les objets (affiches, bancs), les rythmes (bus, passants).",
+      desc:"Choisis un lieu ordinaire et cadre-le strictement (un coin de cour, un arrêt de bus, un bout de place). Reste sur place assez longtemps pour laisser apparaître des régularités : micro-gestes, distances entre personnes, parcours répétitifs, rythmes (arrivées/départs), interactions avec les objets. Décris sans interpréter trop vite : ce que tu vois/entends/sens, la disposition matérielle, les flux et les zones plus ou moins “habitées”. Ajoute un croquis de situation (où sont les éléments, où tu te places).",
+      example:"Arrêt de bus : noter les positions (assis/debout), les distances, qui consulte son téléphone, le rapport aux horaires, les entrées/sorties, les “points de friction” (passage étroit, pluie, bruit).",
+      goals:"Rendre visible le banal : apprendre à décrire finement avant d’expliquer ; repérer des routines et des contraintes ; produire un matériau de terrain exploitable (croquis + notes) pour une analyse ultérieure.",
+      attention:"Ne pas “deviner” des intentions : d’abord décrire. Faire attention au droit à l’image si tu photographies. Choisir une position d’observation discrète et non intrusive.",
       proto:{
-        "Qui":"Toi comme observateur ; usagers du lieu (sans interaction obligatoire).",
-        "Quoi":"Un lieu/une scène ordinaire, cadrée (zone).",
-        "Comment":"Notes + croquis + photos (si autorisé) ; description sensorielle ; relever des indices.",
+        "Qui":"Toi comme observateur ; usagers du lieu (interaction facultative).",
+        "Quoi":"Une scène ordinaire + son organisation spatiale et matérielle.",
+        "Comment":"Notes structurées + croquis ; description sensorielle ; repérage des flux.",
         "Combien":"20–40 min (minimum), idéalement 2 passages.",
-        "Quand":"Deux moments contrastés (matin/soir).",
-        "Où":"Zone délimitée (plan simple).",
-        "Pourquoi":"Apprendre à “voir” le banal, repérer les régularités.",
-        "Pour quoi":"Une fiche de terrain + plan annoté."
+        "Quand":"Deux moments contrastés (matin/soir) si possible.",
+        "Où":"Zone délimitée avec plan simple.",
+        "Pourquoi":"S’entraîner à l’observation rigoureuse.",
+        "Pour quoi":"Fiche de terrain + croquis annoté réutilisable."
       },
-      variants:"Variante : focus sur un seul sens (sonore / visuel / tactile).",
-      tags:["observation","description","zone","sensoriel","croquis"],
+      variants:"Variante : focus sur un seul canal (uniquement sons / uniquement visuel).",
+      tags:["observation","description","zone","croquis","routines"],
       icon:"eye"
     },
+
     {
       id:2, title:"Relevé de traces", cat:"obs",
-      desc:"Observer un lieu via ses traces : usure, déchets, marques, affiches, graffitis, trajets, réparations.",
-      example:"Hall d’école : traces au sol, affichage, coins “habités”, zones d’attente, cheminements dominants.",
+      desc:"Lis un lieu à travers ce qu’il “garde” : usure, réparations, déchets, marques au sol, affiches, graffitis, traces de pneus, mobilier déplacé. Chaque trace est un indice d’usage : elle raconte ce qui s’est produit, qui est passé, et comment l’espace est pratiqué. L’objectif est de produire une collection d’indices, puis une typologie (types de traces) et des hypothèses prudentes.",
+      example:"Couloir d’école : zones d’usure, affichages sauvages, “coins” où l’on s’adosse, traces de chaussures, scotch, mobilier déplacé.",
+      goals:"Comprendre l’écart entre usage prévu et usage réel ; apprendre à inférer avec prudence ; construire une typologie d’indices qui permet de comparer des lieux ou des périodes.",
+      attention:"Ne pas attribuer trop vite une trace à un groupe/personne. Distinguer observation (trace) et interprétation (hypothèse). Photos : attention aux personnes reconnaissables en arrière-plan.",
       proto:{
-        "Qui":"Toi ; personnes invisibles via leurs traces.",
-        "Quoi":"Traces matérielles et indices.",
-        "Comment":"Photos/croquis + liste d’indices + hypothèses prudentes.",
+        "Qui":"Toi ; les usagers “indirectement” via leurs traces.",
+        "Quoi":"Indices matériels (traces) et leur distribution spatiale.",
+        "Comment":"Photos/croquis + inventaire ; regrouper par familles ; hypothèses prudentes.",
         "Combien":"15–30 min ; 20 traces minimum.",
-        "Quand":"Moment calme (moins de flux).",
+        "Quand":"Moment calme (moins de flux) + éventuellement après un événement.",
         "Où":"Lieu cadré (couloir, place, parc).",
-        "Pourquoi":"Comprendre l’usage réel vs usage prévu.",
-        "Pour quoi":"Carte des traces + typologie."
+        "Pourquoi":"Lire les pratiques à partir du matériel.",
+        "Pour quoi":"Carte des traces + typologie + hypothèses argumentées."
       },
-      variants:"Variante : comparer deux lieux similaires.",
-      tags:["traces","indices","usage","cartographie","typologie"],
+      variants:"Variante : comparaison entre deux lieux semblables.",
+      tags:["traces","indices","usage","typologie","lecture"],
       icon:"footprints"
     },
+
     {
       id:3, title:"Cartographie sensible", cat:"obs",
-      desc:"Produire une carte qui restitue ambiances, émotions, perceptions, repères marquants plutôt qu’un plan “objectif”.",
-      example:"Trajet maison–école : zones “bruyantes”, “agréables”, “stressantes”, repères (odeurs, lumières).",
+      desc:"Produis une carte qui restitue l’expérience vécue : ambiances, émotions, intensités (bruit, lumière, odeurs), zones de confort/inconfort, repères personnels. L’objectif n’est pas la précision métrique, mais la mise en forme de perceptions et de “signaux” qui structurent ton parcours (ou celui d’un autre).",
+      example:"Trajet maison–école : zones “bruyantes”, “apaisantes”, “stressantes”, repères (odeurs, lumières, passages étroits), points d’arrêt.",
+      goals:"Relier espace et expérience ; rendre visible l’invisible (ambiances) ; comparer des perceptions (toi vs quelqu’un d’autre / jour vs nuit).",
+      attention:"Bien expliciter ta légende (codes couleurs/symboles). Ne pas confondre ressenti et généralité : c’est une carte située (point de vue).",
       proto:{
-        "Qui":"Toi (ou un petit groupe).",
-        "Quoi":"Ambiances et perceptions spatiales.",
-        "Comment":"Carte à main levée + légende (sensations/codes).",
-        "Combien":"1 parcours + 20 min de mise au propre.",
-        "Quand":"Quand tu fais vraiment le trajet.",
-        "Où":"Parcours défini.",
-        "Pourquoi":"Relier espace vécu et représentations.",
-        "Pour quoi":"Carte sensible + commentaire."
+        "Qui":"Toi (ou un petit groupe / un usager).",
+        "Quoi":"Ambiances et perceptions spatiales sur un parcours.",
+        "Comment":"Carte à main levée + légende + commentaires courts.",
+        "Combien":"1 parcours + 20–30 min de mise au propre.",
+        "Quand":"Pendant un trajet réel (pas “imaginé”).",
+        "Où":"Parcours défini (départ/arrivée).",
+        "Pourquoi":"Comprendre l’espace vécu.",
+        "Pour quoi":"Carte sensible + texte d’accompagnement."
       },
-      variants:"Variante : carte nocturne vs diurne.",
+      variants:"Variante : carte nocturne vs diurne, ou pluie vs beau temps.",
       tags:["carte","ambiances","perception","espace vécu"],
       icon:"map"
     },
+
     {
       id:4, title:"Observation d’un objet en situation", cat:"obs",
-      desc:"Choisir un objet banal (smartphone, poubelle, banc…) et observer ses usages réels : qui l’utilise, comment, quand, pour quoi.",
-      example:"Poubelle de rue : types de dépôts, erreurs de tri, moments de saturation, micro-gestes.",
+      desc:"Choisis un objet banal (banc, poubelle, fontaine, distributeur) et observe ses usages concrets : qui l’utilise, comment, quand, pour quoi, et ce qui “dérape” (détournements, usages imprévus). Note l’état de l’objet (abîmé, propre, réparé), sa position, son accessibilité, et ses relations avec d’autres éléments (panneaux, flux, abris).",
+      example:"Poubelle de rue : types de dépôts, erreurs de tri, moments de saturation, gestes (hésitation, contournement), impact du vent/pluie.",
+      goals:"Comprendre des pratiques à partir de la culture matérielle ; repérer des contraintes (design, emplacement) ; identifier des détournements signifiants.",
+      attention:"Rester discret ; éviter de filmer/photographier des personnes sans accord. Noter ce qui est factuel (action observée) vs ce qui est interprété.",
       proto:{
-        "Qui":"Toi ; usagers de l’objet (sans interaction obligatoire).",
-        "Quoi":"Un objet + ses usages.",
-        "Comment":"Grille simple (usager/usage/temps/lieu) + notes.",
+        "Qui":"Toi ; usagers de l’objet (interaction non obligatoire).",
+        "Quoi":"Un objet + ses usages et non-usages.",
+        "Comment":"Grille simple (usager/usage/temps) + croquis de position.",
         "Combien":"30 min (ou 2×15).",
         "Quand":"Deux plages (forte/faible fréquentation).",
-        "Où":"Objet localisé (photo + croquis).",
-        "Pourquoi":"Comprendre les pratiques à partir du matériel.",
-        "Pour quoi":"Fiche d’observation + mini-diagramme."
+        "Où":"Objet localisé précisément.",
+        "Pourquoi":"Lire le social dans l’objet.",
+        "Pour quoi":"Fiche d’observation + mini-diagramme des usages."
       },
-      variants:"Variante : micro-entretiens (si possible).",
-      tags:["objet","usage","pratiques","grille"],
+      variants:"Variante : 2–3 micro-entretiens pour valider les hypothèses.",
+      tags:["objet","usage","pratiques","design","détournement"],
       icon:"object"
     },
+
     {
       id:5, title:"Micro-entretiens exploratoires", cat:"inter",
-      desc:"Faire 3–5 mini-entretiens (2–4 questions) pour compléter l’observation d’un lieu ou d’un objet.",
-      example:"Demander à des passants : “Qu’est-ce qui caractérise ce lieu ?”, “Vous y venez pourquoi ?”.",
+      desc:"Réalise des mini-entretiens pour compléter une observation : 2–4 questions ouvertes, centrées sur le vécu et les usages. L’idée est d’obtenir des formulations spontanées (mots, catégories, exemples concrets), pas un questionnaire “fermé”. Note aussi les hésitations, les termes utilisés, et les divergences entre personnes.",
+      example:"Dans une place : “Vous venez ici pour quoi ?”, “C’est comment à certaines heures ?”, “Qu’est-ce qui vous dérange / vous plaît ?”.",
+      goals:"Accéder au point de vue des acteurs ; repérer vocabulaire et catégories indigènes ; trianguler l’observation (ce que tu vois vs ce qu’ils disent).",
+      attention:"Consentement clair ; anonymiser ; ne pas insister si la personne refuse. Éviter les questions orientées (“Vous trouvez pas que…?”).",
       proto:{
-        "Qui":"Toi + 3–5 personnes (au hasard ou ciblées).",
-        "Quoi":"Perceptions, usages, souvenirs.",
-        "Comment":"Questions ouvertes + notes ; consentement ; anonymisation.",
-        "Combien":"3–5 entretiens (2–5 min chacun).",
-        "Quand":"Sur place, au moment opportun.",
-        "Où":"Dans le lieu observé.",
-        "Pourquoi":"Accéder au point de vue des acteurs.",
-        "Pour quoi":"Synthèse des réponses + 3 idées clés."
+        "Qui":"Toi + 3–6 personnes (au hasard ou ciblées).",
+        "Quoi":"Usages, perceptions, récits courts.",
+        "Comment":"Questions ouvertes + relances ; notes ; enregistrement si accord.",
+        "Combien":"3–6 entretiens (2–6 min).",
+        "Quand":"Sur place, au bon moment (pas en pleine urgence).",
+        "Où":"Terrain concerné.",
+        "Pourquoi":"Comprendre l’action par le sens que donnent les acteurs.",
+        "Pour quoi":"Synthèse : 3–5 idées + 3 citations anonymisées."
       },
-      variants:"Variante : comparer deux profils (habitant vs visiteur).",
-      tags:["entretien","qualitatif","perceptions","ouvert"],
+      variants:"Variante : comparer deux profils (habitant / visiteur ; novice / habitué).",
+      tags:["entretien","qualitatif","perception","triangulation"],
       icon:"bubbles"
     },
+
     {
       id:6, title:"Chaîne opératoire", cat:"obs",
-      desc:"Décrire une action en étapes (ce qui se fait, avec quoi, dans quel ordre) : gestes, outils, décisions.",
-      example:"Acheter un sandwich : entrée, choix, paiement, attente, consommation… et points de friction.",
+      desc:"Décris une activité comme une suite d’étapes (avant/pendant/après) : gestes, outils, décisions, micro-choix. L’important est la logique pratique : qu’est-ce qui est indispensable ? qu’est-ce qui est improvisé ? où sont les “points de friction” ? Tu produis un schéma fléché clair, puis un commentaire.",
+      example:"Acheter un sandwich : entrée → choix → commande → paiement → attente → récupération → consommation ; noter erreurs possibles, files, contraintes de temps.",
+      goals:"Rendre visible l’organisation implicite d’une action ; comprendre contraintes et marges de manœuvre ; comparer des manières de faire (deux lieux / deux personnes).",
+      attention:"Bien distinguer étape observée vs étape supposée. Si tu interroges une personne, ne pas la mettre en difficulté (questions simples).",
       proto:{
         "Qui":"Toi ; éventuellement un acteur qui réalise la tâche.",
-        "Quoi":"Une activité répétée.",
-        "Comment":"Décomposer en étapes + schéma fléché.",
+        "Quoi":"Une activité répétée, en situation réelle.",
+        "Comment":"Décomposer + schéma ; noter outils, temps, décisions.",
         "Combien":"1 activité (ou 2 pour comparer).",
-        "Quand":"Quand l’activité se déroule réellement.",
+        "Quand":"Quand l’activité se déroule.",
         "Où":"Lieu de l’action.",
-        "Pourquoi":"Voir la logique pratique et les contraintes.",
-        "Pour quoi":"Diagramme + commentaire."
+        "Pourquoi":"Comprendre la logique des pratiques.",
+        "Pour quoi":"Diagramme + commentaire (points de friction)."
       },
-      variants:"Variante : comparer novice vs expert.",
+      variants:"Variante : novice vs expert ; ou “version idéale” vs “version réelle”.",
       tags:["processus","diagramme","gestes","organisation"],
       icon:"flow"
     },
+
     {
       id:7, title:"Portrait d’un lieu par objets", cat:"obs",
-      desc:"Raconter un lieu à partir de 10 objets/indices (vitrine, ticket, affiche, mobilier…) et ce qu’ils “disent” du territoire.",
-      example:"Place du village : bancs, annonces, poubelles, commerces, drapeaux, panneaux.",
+      desc:"Raconte un lieu à partir d’objets/indices choisis (10 minimum) : panneaux, mobilier, menus, tickets, traces, affiches. Chaque objet est décrit et interprété prudemment : que révèle-t-il sur le lieu (public, règles, économie, valeurs, usages) ? Tu organises ensuite l’ensemble sur un plan ou une planche.",
+      example:"Place du village : bancs, annonces, poubelles, commerces, drapeaux, panneaux ; “ce que ça dit” du lieu.",
+      goals:"Apprendre à sélectionner des indices pertinents ; construire une lecture territoriale à partir du matériel ; produire une restitution synthétique et partageable.",
+      attention:"Ne pas tomber dans l’anecdote : relier chaque objet à une hypothèse argumentée. Photos : attention au droit à l’image.",
       proto:{
         "Qui":"Toi.",
-        "Quoi":"10 objets/indices significatifs.",
-        "Comment":"Photo/croquis + annotation : “ce que ça révèle”.",
-        "Combien":"10 objets minimum.",
-        "Quand":"Moment vivant (un peu d’activité).",
-        "Où":"Lieu choisi.",
+        "Quoi":"10+ objets/indices significatifs d’un lieu.",
+        "Comment":"Photo/croquis + annotation ; assemblage sur plan/planche.",
+        "Combien":"10 à 20 objets.",
+        "Quand":"Moment avec un peu de vie (si possible).",
+        "Où":"Lieu cadré.",
         "Pourquoi":"Lire le social dans le matériel.",
-        "Pour quoi":"Plan + galerie commentée."
+        "Pour quoi":"Planche commentée + 5 idées clés."
       },
-      variants:"Variante : mêmes objets dans deux lieux.",
-      tags:["indices","objet","territoire","lecture"],
+      variants:"Variante : deux lieux similaires comparés par objets.",
+      tags:["indices","objet","territoire","restitution"],
       icon:"gallery"
     },
+
     {
       id:8, title:"Observation comparée", cat:"obs",
-      desc:"Comparer deux lieux/situations similaires pour faire ressortir différences d’usages, d’ambiances, de normes.",
-      example:"Deux cafétérias : files, bruit, disposition, types d’interactions.",
+      desc:"Compare deux terrains (ou deux moments du même terrain) avec la même grille : flux, règles, ambiances, interactions, objets, accès. Le but est d’isoler des variables explicatives : organisation spatiale, publics, horaires, normes, dispositifs matériels.",
+      example:"Deux cafétérias : files, bruit, disposition, types d’interactions, tempo du service.",
+      goals:"Produire un raisonnement comparatif ; faire émerger des variables ; passer de l’observation à l’hypothèse argumentée.",
+      attention:"Utiliser la même grille sinon la comparaison est biaisée. Noter le contexte (heure, météo, événement) qui peut tout changer.",
       proto:{
         "Qui":"Toi.",
-        "Quoi":"Deux terrains comparables.",
-        "Comment":"Même grille d’observation pour les deux.",
+        "Quoi":"Deux situations comparables.",
+        "Comment":"Même grille + tableau comparatif.",
         "Combien":"2×20–30 min.",
         "Quand":"Même créneau si possible.",
-        "Où":"Deux lieux distincts.",
-        "Pourquoi":"Identifier des variables (organisation, public, règles).",
-        "Pour quoi":"Tableau comparatif + hypothèses."
+        "Où":"Deux lieux distincts (ou même lieu à deux temps).",
+        "Pourquoi":"Identifier variables et effets.",
+        "Pour quoi":"Tableau + hypothèses (3 minimum)."
       },
-      variants:"Variante : comparaison temporelle (même lieu à deux moments).",
+      variants:"Variante : comparaison “jour/nuit” ou “semaine/week-end”.",
       tags:["comparaison","variables","grille","hypothèses"],
       icon:"compare"
     },
+
     {
       id:9, title:"Restitution créative", cat:"meta",
-      desc:"Transformer un matériau d’observation en forme de restitution : poster, mini-expo, fanzine, audio, carte interactive.",
+      desc:"Transforme un matériau de terrain en une forme de restitution : poster, mini-expo, fanzine, audio, carte interactive. Tu choisis un “fil” (question centrale) et une structure éditoriale (plan) pour rendre lisible ce que tu as collecté. L’objectif est la mise en sens : sélectionner, ordonner, légender, expliquer.",
       example:"Fanzine 6 pages : 1 page = 1 angle (sons, flux, traces, portraits, carte, conclusion).",
+      goals:"Passer de la collecte à la communication ; apprendre la sélection (ce qu’on garde/écarte) ; produire un objet partageable qui soutient un propos.",
+      attention:"Éviter l’accumulation : moins mais mieux. Toujours contextualiser (où/quand/comment) sinon la restitution perd son sens.",
       proto:{
         "Qui":"Toi (ou groupe).",
         "Quoi":"Matériau déjà collecté.",
-        "Comment":"Choisir un format + une logique éditoriale (plan).",
+        "Comment":"Choisir format + plan + légendes + titre/objectif.",
         "Combien":"1 rendu final (A3/A4/numérique).",
-        "Quand":"Après collecte.",
-        "Où":"En classe/atelier.",
-        "Pourquoi":"Donner sens, rendre partageable.",
-        "Pour quoi":"Produit final + 5 lignes de justification."
+        "Quand":"Après la collecte.",
+        "Où":"Atelier/classe.",
+        "Pourquoi":"Donner sens et rendre partageable.",
+        "Pour quoi":"Produit final + justification (10 lignes)."
       },
       variants:"Variante : exposition “mur” (cartes + citations + objets).",
       tags:["restitution","format","édition","synthèse"],
       icon:"book"
     },
 
-    /* 10–19 : d’après les pages envoyées + tes demandes “qui quoi comment…” */
+    /* 10–19 : d’après tes pages */
     {
       id:10, title:"Entretiens informels", cat:"inter",
-      desc:"Interroger une dizaine de passants sur le caractère spécifique d’un lieu, avec 3–4 thèmes préparés (dont une question très ouverte).",
-      example:"Place centrale : “Qu’est-ce qui fait l’identité de cet endroit ?” + “Un souvenir marquant ici ?” + “Un lieu proche important ?”.",
+      desc:"Interroge des usagers du lieu (environ 10 personnes) pour obtenir une description ordinaire et située : ce que le lieu “est” pour eux, ce qu’on y fait, ce qu’on y évite, ce qui a changé. Prépare 3–4 thèmes (dont une question très ouverte) et privilégie des questions qui appellent des exemples (“racontez-moi une situation”).",
+      example:"Place centrale : “Qu’est-ce qui fait l’identité de cet endroit ?” + “Un souvenir marquant ici ?” + “À quel moment c’est le plus agréable/désagréable ?”.",
+      goals:"Accéder aux représentations sociales d’un espace ; repérer vocabulaire, catégories, phénomènes saillants ; produire une cartographie issue des discours (repères, territoires évoqués).",
+      attention:"Consentement + anonymisation. Ne pas transformer l’échange en interrogatoire. Noter les mots exacts (utile pour analyser les catégories).",
       proto:{
         "Qui":"Toi + ~10 passants/usagers ; consentement et anonymisation.",
         "Quoi":"Représentations du lieu (réputation, souvenirs, phénomènes marquants).",
-        "Comment":"Questions ouvertes + relances ; notes fidèles ; éventuellement enregistrement si accord.",
-        "Combien":"Environ 10 entretiens courts (3–8 min).",
+        "Comment":"Questions ouvertes + relances ; notes fidèles ; enregistrement si accord.",
+        "Combien":"10 entretiens courts (3–8 min).",
         "Quand":"Moment avec flux (heure de pointe / week-end).",
         "Où":"Dans le lieu choisi (ou ses abords).",
-        "Pourquoi":"Accéder au point de vue des acteurs (l’entretien comme situation d’observation).",
-        "Pour quoi":"Synthèse + carte du territoire à partir des réponses ; comparaison avec exercice 4."
+        "Pourquoi":"Accéder au point de vue des acteurs.",
+        "Pour quoi":"Synthèse + carte du territoire à partir des réponses ; comparaison avec observation."
       },
-      variants:"Variantes : cartographie personnelle ; portrait biographique (description fine d’une personne + ses interactions).",
+      variants:"Variantes : cartographie personnelle ; portrait biographique.",
       tags:["entretien","informel","lieu","représentations","carte"],
       icon:"bubbles"
     },
+
     {
       id:11, title:"Observation participante", cat:"imm",
-      desc:"Participer à une activité collective (jardin partagé, repair café, cérémonie, visite…) en contribuant réellement, puis décrire après coup l’organisation et tes impressions.",
-      example:"Repair café : arriver en avance, aider à l’accueil, observer vocabulaire, rôles, non-dits ; écrire le soir un compte rendu.",
+      desc:"Participe réellement à une activité collective (association, atelier, visite, jardin partagé, etc.). L’idée est d’accéder à des informations que l’observation externe ne donne pas : règles implicites, division des rôles, manières de faire, “petits arrangements”. Pendant la participation : notes minimales. Après : écriture détaillée (à chaud) sur l’organisation et tes impressions.",
+      example:"Repair café : aider à l’accueil, observer comment on diagnostique une panne, les échanges de savoirs, la place des outils, les rôles (expert/novice).",
+      goals:"Comprendre de l’intérieur ; identifier normes implicites et coordination ; saisir le sens pratique des gestes et décisions ; construire un récit ethnographique structuré.",
+      attention:"Toujours demander l’autorisation (au moins à un responsable). Ne pas gêner l’activité. Éviter de citer des personnes identifiables ; anonymiser.",
       proto:{
-        "Qui":"Toi + membres du groupe ; permission demandée en amont.",
+        "Qui":"Toi + membres du groupe ; permission en amont.",
         "Quoi":"Une activité collective et ses règles (rôles, échanges, non-dits).",
-        "Comment":"Participation active ; pas/peu de notes sur le moment ; écriture “à froid” ensuite.",
-        "Combien":"1 séance longue (1–3h) + 30–60 min d’écriture.",
-        "Quand":"Le jour de l’activité ; rédaction le soir (ou quelques heures après).",
-        "Où":"Lieu de l’activité (association, espace public, atelier).",
-        "Pourquoi":"Accéder à des infos difficilement visibles en observateur externe ; comprendre de l’intérieur.",
-        "Pour quoi":"Texte structuré décrivant : organisation + interactions + surprises/impresions."
+        "Comment":"Participation active ; écriture “à froid” ensuite.",
+        "Combien":"1–3h + 30–60 min d’écriture.",
+        "Quand":"Le jour de l’activité ; rédaction le soir.",
+        "Où":"Lieu de l’activité.",
+        "Pourquoi":"Accéder à des dimensions invisibles de l’extérieur.",
+        "Pour quoi":"Compte rendu structuré (organisation + interactions + surprises)."
       },
-      variants:"Variantes : reproduction d’une activité ; commentaires de photographies avec les participants (accord requis).",
+      variants:"Variante : reproduction d’une activité ; commentaires de photos avec participants (accord).",
       tags:["immersion","participation","groupe","rôles","éthique"],
       icon:"handshake"
     },
+
     {
       id:12, title:"Parcours commentés", cat:"parc",
-      desc:"Se faire guider 20 minutes par un usager du lieu, qui décrit et commente l’ambiance en mobilisant les sens ; produire ensuite un plan commenté.",
-      example:"Quartier : la personne montre ses repères, zones évitées, sons, odeurs ; tu enregistres (si accord) et reconstruis un plan annoté.",
+      desc:"Rendez-vous dans un lieu avec un usager. Pendant environ 20 minutes, il/elle te guide et commente ce qui compte : repères, ambiances, souvenirs, contraintes. Tu encourages une description sensorielle (visuel, sonore, olfactif, tactile, thermique…). Tu interviens peu : relances simples. Puis tu reconstruis un plan commenté qui recompose l’itinéraire et les points marquants.",
+      example:"Quartier : zones évitées, endroits “calmes”, lieux de sociabilité ; bruit à certains carrefours ; odeurs près d’une boulangerie ; éclairage nocturne.",
+      goals:"Accéder à l’expérience “en mouvement” et à la perception située ; cartographier des repères significatifs ; comparer des points de vue (si tu fais plusieurs parcours).",
+      attention:"Accord si enregistrement. Ne pas imposer ton interprétation : laisser la personne choisir ce qui est important. Clarifier ce qui peut être partagé.",
       proto:{
-        "Qui":"Toi + un usager régulier (ou non) ; accord pour enregistrer.",
+        "Qui":"Toi + un usager régulier ; accord pour enregistrer.",
         "Quoi":"Expérience sensible d’un parcours + repères significatifs.",
-        "Comment":"Marcher ensemble ; questions légères ; enregistrement/notage ; restitution en plan commenté.",
-        "Combien":"~20 min de marche + 20–40 min de restitution.",
+        "Comment":"Marcher ensemble ; relances ; notes/enregistrement ; plan commenté.",
+        "Combien":"~20 min + 20–40 min de restitution.",
         "Quand":"Moment représentatif (jour/nuit selon enjeu).",
         "Où":"Quartier/forêt/vallée/ensemble architectural.",
-        "Pourquoi":"Accéder à la perception “en mouvement” ; confronter points de vue.",
+        "Pourquoi":"Obtenir des “comptes rendus de perception en mouvement”.",
         "Pour quoi":"Plan commenté + synthèse des aspects marquants."
       },
-      variants:"Variante : filature (shadowing) à 1–2 m, notes rapides ; représentation cartographique des actions.",
+      variants:"Variante : filature (shadowing) ; diagnostic en marchant (collectif).",
       tags:["parcours","mobilité","sens","plan","usager"],
       icon:"route"
     },
+
     {
       id:13, title:"Perturbation volontaire", cat:"exp",
-      desc:"Choisir une situation normée (file d’attente, ascenseur…) puis enfreindre légèrement une règle implicite pour observer réactions et normes sociales.",
-      example:"Ascenseur : se placer dos aux portes ; noter regards, silences, repositionnements, commentaires.",
+      desc:"Observe d’abord une situation normée (file d’attente, ascenseur, repas collectif) pour identifier les règles implicites. Puis adopte une conduite légèrement déplacée (sans danger) afin de provoquer des réactions : malaise, réprimandes, repositionnements, silence, humour. Répète quelques fois en laissant des pauses. Documente l’effet sur ton diagramme : comment la norme se manifeste quand elle est transgressée.",
+      example:"Ascenseur : se placer dos aux portes ; noter regards, silence, repositionnement. File : avancer “trop” près, puis revenir en arrière.",
+      goals:"Rendre visibles les normes tacites ; comprendre les mécanismes de régulation sociale ; apprendre à observer réactions et ajustements en situation.",
+      attention:"Choisir une perturbation légère et non agressive. Stopper si tension forte. Ne pas humilier des personnes. Éthique : éviter les publics vulnérables.",
       proto:{
-        "Qui":"Toi (acteur de la perturbation) + personnes présentes (sans les exposer inutilement).",
-        "Quoi":"Normes implicites, malaise, régulations sociales.",
-        "Comment":"Observer d’abord la routine ; réaliser une perturbation légère ; répéter avec pauses ; consigner effets.",
-        "Combien":"3–5 répétitions max (courtes).",
-        "Quand":"Moment où la situation se produit réellement.",
+        "Qui":"Toi (acteur) + personnes présentes.",
+        "Quoi":"Normes implicites et réactions.",
+        "Comment":"Routine → perturbation → observation → répétition mesurée.",
+        "Combien":"3–5 répétitions max.",
+        "Quand":"Quand la situation se présente réellement.",
         "Où":"Lieu public ordinaire (sans risque).",
-        "Pourquoi":"Rendre visibles les règles tacites du quotidien.",
-        "Pour quoi":"Diagramme “routine vs perturbation” + analyse des réactions."
+        "Pourquoi":"Faire apparaître ce qui est invisible en temps normal.",
+        "Pour quoi":"Diagramme + analyse des réactions (types de régulation)."
       },
-      variants:"Variante : comparaison de deux lieux (ex. magasin vs gare).",
-      tags:["normes","interaction","expérience","Garfinkel","routines"],
+      variants:"Variante : comparer 2 lieux / 2 situations.",
+      tags:["normes","interaction","expérience","routines"],
       icon:"warning"
     },
+
     {
       id:14, title:"Suivi de zone", cat:"suivi",
-      desc:"Délimiter une zone (parc, jardin, forêt… ou même un étage de frigo) et la documenter de façon répétée, idéalement au quotidien, sur la durée.",
-      example:"Carré d’herbe 1m×1m : photos chaque jour, notes météo, traces, passage d’animaux, changements saisonniers ; fanzine final.",
+      desc:"Délimite une zone (un coin de parc, une parcelle de forêt, un jardin… ou une micro-zone domestique). Reviens régulièrement pour documenter l’évolution : photos, notes, sons, inscriptions, traces, météo, activités humaines/animales. La répétition fait émerger rythmes et typologies. À la fin, tu produis un fanzine/livret qui rend compte du suivi dans la durée.",
+      example:"Carré 1m×1m : photos quotidiennes ; noter lumière, pluie, insectes, feuilles ; comparer semaine 1 vs semaine 4 ; livret final.",
+      goals:"Apprendre l’observation au temps long ; repérer rythmes et cycles ; transformer des séries de données en typologies (catégories d’événements).",
+      attention:"Être régulier (sinon on ne voit pas les rythmes). Noter le contexte à chaque passage (heure/météo). Respecter le lieu (ne rien dégrader).",
       proto:{
-        "Qui":"Toi ; éventuellement proches/élèves comme co-observateurs.",
-        "Quoi":"Évolutions d’un micro-territoire dans le temps (rythmes, typologies).",
-        "Comment":"Notes + photos + sons ; relecture régulière ; retour sur place pour préciser.",
-        "Combien":"Minimum 2 semaines (idéal : 1–3 mois).",
+        "Qui":"Toi ; éventuellement co-observateurs.",
+        "Quoi":"Évolution d’un micro-territoire.",
+        "Comment":"Notes + photos + sons ; relectures ; séries.",
+        "Combien":"Min 2 semaines (idéal 1–3 mois).",
         "Quand":"Rythme régulier (quotidien/2–3 fois semaine).",
-        "Où":"Zone strictement délimitée (frontière claire).",
-        "Pourquoi":"Comprendre les dynamiques temporelles et l’hyperlocal.",
-        "Pour quoi":"Fanzine / livret restituant le suivi + typologies/rythmes."
+        "Où":"Zone strictement délimitée.",
+        "Pourquoi":"Comprendre dynamiques temporelles/hyperlocales.",
+        "Pour quoi":"Fanzine/livret + typologies/rythmes."
       },
-      variants:"Variante : représentation multi-échelle (7 distances/points de vue d’un objet).",
-      tags:["suivi","temps long","hyperlocal","rythmes","fanzine"],
+      variants:"Variante : représentation multi-échelle (7 distances/points de vue).",
+      tags:["suivi","temps long","rythmes","fanzine"],
       icon:"clock"
     },
+
     {
       id:15, title:"Compilation thématique", cat:"suivi",
-      desc:"Constituer un dossier sur un thème suivi plusieurs mois (textes, images, sons, vidéos) en consultant des sources 2–3 fois par semaine et en annotant par mots-clés.",
-      example:"“Plastique” : extraits d’articles, stats, photos, pubs, posts d’experts ; chaque entrée taguée ; relectures hebdomadaires.",
+      desc:"Construis un dossier sur un thème suivi plusieurs mois. Tu collectes des extraits (articles, statistiques, images, sons, vidéos, posts d’experts, littérature grise) en consultant des sources 2–3 fois par semaine. Chaque pièce est annotée avec des mots-clés, et tu relis régulièrement les entrées précédentes. L’enjeu est cumulatif : tu fabriques un “réservoir” et tu apprends à organiser l’hétérogène.",
+      example:"Thème “énergie solaire” : articles, schémas, modèles, citations, exemples locaux ; tags (coûts, stockage, esthétique, politiques).",
+      goals:"Développer une démarche de veille ; construire un point de vue informé ; repérer évolutions, controverses, limites/opportunités ; préparer une analyse plus conséquente.",
+      attention:"Toujours noter la source/date (sinon inutilisable). Éviter de tout garder : sélectionner et taguer. Relecture obligatoire pour donner du sens.",
       proto:{
         "Qui":"Toi (veilleur/collecteur).",
-        "Quoi":"Un thème + un corpus hétérogène (presse, académique, réseaux, littérature grise).",
-        "Comment":"Collecter/archiver ; annoter par tags ; relire ; organiser un “réservoir” de références.",
-        "Combien":"2–3 sessions/semaine pendant 1–2 mois (ou plus).",
+        "Quoi":"Un thème + corpus hétérogène.",
+        "Comment":"Collecter/archiver ; taguer ; relire ; organiser.",
+        "Combien":"2–3 sessions/semaine sur 1–2 mois (ou +).",
         "Quand":"Calendrier fixe (ex. lun/mer/ven).",
-        "Où":"Dossier numérique (ou papier) structuré.",
-        "Pourquoi":"Construire progressivement un point de vue informé ; repérer évolutions.",
-        "Pour quoi":"Dossier thématique + index de mots-clés + synthèse (1–2 pages)."
+        "Où":"Dossier numérique/papier structuré.",
+        "Pourquoi":"Rester informé et construire une vision.",
+        "Pour quoi":"Dossier + index + synthèse (1–2 pages)."
       },
-      variants:"Variante : “commonplace book” (carnet de citations/notes) ou mini-newsletter interne.",
+      variants:"Variante : carnet de citations (commonplace book) ; mini-newsletter.",
       tags:["veille","dossier","sources","tags","synthèse"],
       icon:"folder"
     },
+
     {
       id:16, title:"Inventaire matériel", cat:"inv",
-      desc:"Choisir une pratique (cueillette, skateboard, tuning, permaculture…) et documenter les objets impliqués ; produire un diagramme-réseau des composants et relations.",
-      example:"Skate : board, trucks, roulements, spots, outils, vidéos, magasins ; relier “achat”, “réparation”, “style”, “usure”.",
+      desc:"Sélectionne une pratique (champignons, skateboard, permaculture, etc.). Documente les objets impliqués (photos, extraits de conversations, dessins de gestes) et leurs relations : qui utilise quoi, quand, où, pourquoi, dans quel état, avec quelles références culturelles. Produis un diagramme-réseau qui rend compte des composantes (objets/lieux/acteurs) et des liens (achat, réparation, transmission, style, sécurité…).",
+      example:"Permaculture : outils, graines, compost, lieux, savoirs, réseaux d’échange ; relier “apprendre”, “réparer”, “partager”, “contraintes”.",
+      goals:"Comprendre une pratique via sa culture matérielle ; rendre visible un système d’objets et d’acteurs ; produire un modèle synthétique (réseau).",
+      attention:"Éviter de devenir “collectionneur compulsif” : documenter plutôt que accumuler. Respecter la vie privée si inventaire au domicile (accord).",
       proto:{
         "Qui":"Toi + pratiquants (si possible).",
-        "Quoi":"Objets, lieux, usages, états, relations (visible/caché).",
-        "Comment":"Photos + notes + dessins ; inventaire ; diagramme avec flèches légendées.",
-        "Combien":"1–3 semaines de collecte ; 20 objets/éléments min.",
-        "Quand":"Pendant la pratique / après sessions.",
-        "Où":"Terrain de la pratique (domicile, atelier, spot).",
-        "Pourquoi":"Voir la culture matérielle d’une pratique et ses logiques.",
-        "Pour quoi":"Diagramme réseau + courte analyse."
+        "Quoi":"Objets, usages, états, relations.",
+        "Comment":"Photos/notes/dessins ; inventaire ; diagramme légendé.",
+        "Combien":"1–3 semaines ; 20 éléments min.",
+        "Quand":"Pendant la pratique + temps de synthèse.",
+        "Où":"Terrain de la pratique (spot/atelier/domicile).",
+        "Pourquoi":"Voir la logique d’une pratique culturelle.",
+        "Pour quoi":"Diagramme réseau + analyse courte."
       },
-      variants:"Variante : relevé de détournements (objets bricolés/modifiés, nouvelle fonction).",
-      tags:["inventaire","objets","pratique","réseau","bricolage"],
+      variants:"Variante : relevé de détournements (objets bricolés, nouvelle fonction).",
+      tags:["inventaire","objets","réseau","pratique","bricolage"],
       icon:"network"
     },
+
     {
       id:17, title:"Collecte idiomatique", cat:"lang",
-      desc:"Choisir un domaine que tu connais mal ; suivre 15–16 plusieurs semaines ; relever les mots/expressions inconnus ; fabriquer un lexique (abécédaire) accessible.",
-      example:"Jeu vidéo en ligne : DPS, nerf, meta, loot, matchmaking… définitions + exemples ; abécédaire illustré.",
+      desc:"Choisis un domaine du quotidien que tu connais mal. En suivant une démarche de veille/inventaire (ex. 15 et 16), relève tous les mots/expressions dont le sens t’échappe : jargon technique, métaphores, références, emprunts à d’autres langues. Cherche les définitions (dictionnaires, forums, personnes du milieu) et produis un lexique accessible à un profane, organisé comme un abécédaire.",
+      example:"Rugby : ruck, maul, essai de pénalité, chandelle… définition simple + exemple d’usage + petite illustration.",
+      goals:"Comprendre une pratique par sa langue ; accéder à la logique des acteurs ; constituer un outil de médiation (lexique) et repérer les variations (sens selon groupes).",
+      attention:"Vérifier les termes auprès de plusieurs sources (un forum peut être faux). Distinguer définition “officielle” et usage local. Citer les sources.",
       proto:{
-        "Qui":"Toi ; éventuellement membres du milieu (pour vérifier le sens).",
-        "Quoi":"Jargon, métaphores, emprunts, expressions du groupe.",
-        "Comment":"Collecter mots inconnus ; chercher ; valider ; rédiger définitions simples + exemples.",
+        "Qui":"Toi ; éventuellement membres du milieu pour validation.",
+        "Quoi":"Jargon, expressions, emprunts.",
+        "Comment":"Collecter → chercher → valider → écrire définitions + exemples.",
         "Combien":"20–40 entrées minimum.",
-        "Quand":"Sur plusieurs semaines, au fil des observations/lectures.",
-        "Où":"Terrain + forums + dictionnaires + échanges.",
-        "Pourquoi":"Comprendre une pratique via sa langue ; saisir la logique des acteurs.",
-        "Pour quoi":"Lexique en abécédaire (1–3 pages, ou A4 recto-verso)."
+        "Quand":"Sur plusieurs semaines.",
+        "Où":"Terrain + web + dictionnaires + échanges.",
+        "Pourquoi":"Saisir le sens et les catégories indigènes.",
+        "Pour quoi":"Lexique abécédaire (profane-friendly)."
       },
-      variants:"Variante : patois local (10 mots/expressions + dessins + collecte auprès de personnes âgées).",
-      tags:["lexique","jargon","langage","abécédaire","patois"],
+      variants:"Variante : patois local (10 mots/expressions + dessins).",
+      tags:["lexique","jargon","abécédaire","langage"],
       icon:"abc"
     },
+
     {
       id:18, title:"Collecter / Classer", cat:"inv",
-      desc:"Choisir une chose à laquelle tu ne fais pas attention (panneaux, sacs à dos, graffitis…) ; documenter sur semaines ; identifier catégories ; produire une classification en poster.",
-      example:"Panneaux d’interdiction : formes, pictos, ton, emplacement ; familles (danger, circulation, incivilités, privatisation).",
+      desc:"Choisis un type d’élément qui attire peu ton attention (panneaux, feuilles, sacs à dos, graffitis…). Pendant plusieurs semaines/mois, documente chaque rencontre par photo/dessin/texte. Note le maximum de similitudes et différences ; fais émerger des catégories ; organise-les en une classification plus ou moins probante (poster) avec familles et noms de catégories.",
+      example:"Graffitis : familles (tags, slogans, fresques), supports, couleurs, localisation, thèmes ; poster final en arbre.",
+      goals:"Apprendre le raisonnement typologique ; entraîner l’attention aux détails ; produire un outil de lecture (classification) et interroger ce que tes catégories révèlent de ton regard.",
+      attention:"Les catégories ne sont jamais “neutres” : expliciter tes critères. Contextualiser les photos (où/quand). Respecter propriété privée/droit à l’image.",
       proto:{
         "Qui":"Toi ; éventuellement autres collecteurs pour diversifier.",
-        "Quoi":"Rencontres répétées avec le même type d’objet/signe.",
-        "Comment":"Photos/dessins + notes ; comparer ; créer catégories ; organiser un arbre/typologie.",
-        "Combien":"2–6 semaines ; 30 occurrences minimum.",
+        "Quoi":"Un type d’objet/signe observé de façon répétée.",
+        "Comment":"Collecte → comparaison → catégories → organisation → poster.",
+        "Combien":"2–6 semaines ; 30 occurrences min.",
         "Quand":"Pendant déplacements habituels.",
-        "Où":"Espace urbain (ou autre) ; zone(s) indiquées.",
-        "Pourquoi":"Apprendre par comparaison ; faire émerger structure et variations.",
-        "Pour quoi":"Poster de classification (familles/catégories) + légende."
+        "Où":"Espace urbain (ou autre) ; zones multiples.",
+        "Pourquoi":"Faire émerger structure et variations.",
+        "Pour quoi":"Poster de classification + légende + critères."
       },
-      variants:"Variantes : collecte d’objets (petits artefacts) ; comparaison culturelle (objets sur un site de vente d’une autre aire).",
-      tags:["classification","typologie","collection","comparaison","poster"],
+      variants:"Variantes : collecte d’objets ; comparaison culturelle (site de vente autre aire).",
+      tags:["classification","typologie","collection","poster"],
       icon:"tree"
     },
+
     {
       id:19, title:"À vous (protocole personnel)", cat:"meta",
-      desc:"Définir un protocole pour chaque territoire nouveau visité ; constituer un “observatoire portatif” inspiré des exercices et préciser critères + format du rendu.",
-      example:"Voyage : 1) carte sensible du quartier ; 2) 5 micro-entretiens ; 3) inventaire de 12 objets ; 4) restitution en mini-fanzine.",
+      desc:"Pour chaque territoire nouveau visité, définis ton protocole : quelles dimensions tu observes, comment tu collectes, et quel rendu tu produis. Tu peux combiner plusieurs méthodes (par exemple : une carte sensible + des micro-entretiens + un inventaire). L’idée est de construire un “observatoire portatif” et d’enrichir ta manière de faire au fil du temps.",
+      example:"Nouveau quartier : 1) carte sensible (ambiances) ; 2) 5 micro-entretiens ; 3) inventaire de 12 objets ; 4) restitution en mini-fanzine.",
+      goals:"Développer une méthode personnelle cohérente ; apprendre à choisir les bons outils selon le terrain ; intégrer une réflexion éthique (consentement, diffusion).",
+      attention:"Penser à l’éthique dès le départ : droit à l’image, anonymisation, partage. Définir un format réaliste (temps disponible).",
       proto:{
-        "Qui":"Toi ; selon le protocole : passants/usagers/objets/lieux.",
-        "Quoi":"Un territoire nouveau (loin ou au coin de la rue).",
-        "Comment":"Assembler 2–4 méthodes ; définir règles (éthique, collecte, tri).",
-        "Combien":"1 protocole = 1 territoire (1–3 séances).",
-        "Quand":"Avant + pendant + après la visite (préparer / collecter / restituer).",
+        "Qui":"Toi ; selon protocole : passants/usagers/objets/lieux.",
+        "Quoi":"Un territoire nouveau (loin ou proche).",
+        "Comment":"Assembler 2–4 méthodes ; définir règles de collecte/tri.",
+        "Combien":"1 protocole par territoire (1–3 séances).",
+        "Quand":"Avant + pendant + après (préparer / collecter / restituer).",
         "Où":"Territoire choisi + espace de restitution.",
-        "Pourquoi":"Construire ta manière d’observer, renforcer ta capacité à remarquer.",
-        "Pour quoi":"Rendu explicite (poster/fanzine/carte/texte/site) + justification."
+        "Pourquoi":"Cultiver la capacité à remarquer.",
+        "Pour quoi":"Rendu + justification + charte éthique minimale."
       },
-      variants:"Variante : charte éthique (consentement, anonymisation, droit à l’image, diffusion limitée).",
-      tags:["méta","protocole","éthique","restitution","combinaison"],
+      variants:"Variante : créer une grille “éthique & diffusion” (options de partage).",
+      tags:["méta","protocole","éthique","combinaison","restitution"],
       icon:"toolbox"
     }
   ];
@@ -983,19 +1118,17 @@
     return s[name] || s.object;
   }
 
-  function catBadge(catId){
-    const c = CATEGORIES.find(x=>x.id===catId);
-    const label = c ? c.label : "Catégorie";
-    const bg = (catId==="obs") ? "var(--cat-obs)"
-            : (catId==="inter") ? "var(--cat-inter)"
-            : (catId==="imm") ? "var(--cat-imm)"
-            : (catId==="parc") ? "var(--cat-parc)"
-            : (catId==="exp") ? "var(--cat-exp)"
-            : (catId==="suivi") ? "var(--cat-suivi)"
-            : (catId==="inv") ? "var(--cat-inv)"
-            : (catId==="lang") ? "var(--cat-lang)"
-            : "var(--cat-meta)";
-    return { label, bg };
+  /* ✅ Icône panneau attention */
+  function warnIcon(){
+    return `
+      <div class="warnIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 3l10 18H2z"/>
+          <path d="M12 9v5"/>
+          <path d="M12 17h.01"/>
+        </svg>
+      </div>
+    `;
   }
 
   /* =========================
@@ -1051,7 +1184,7 @@
   function matches(ex, q){
     if(!q) return true;
     const hay = [
-      ex.title, ex.desc, ex.example,
+      ex.title, ex.desc, ex.example, ex.goals, ex.attention,
       ex.variants,
       (ex.tags||[]).join(" "),
       Object.values(ex.proto||{}).join(" ")
@@ -1074,7 +1207,7 @@
     nores.style.display = total ? "none" : "block";
 
     count.style.display = "block";
-    count.textContent = `${total} exercice(s) affiché(s) — Catégorie : ${CATEGORIES.find(c=>c.id===activeCat)?.label || "—"}`
+    count.textContent = `${total} exercice(s) — Catégorie : ${CATEGORIES.find(c=>c.id===activeCat)?.label || "—"}`
   }
 
   function card(ex, q){
@@ -1097,9 +1230,18 @@
       <div class="cardBody">
         <p class="miniDesc">${highlight(ex.desc, q)}</p>
 
+        <div class="goalLine">
+          🎯 Objectif : <span>${highlight(ex.goals, q)}</span>
+        </div>
+
+        <div class="warn">
+          ${warnIcon()}
+          <div><b>Attention :</b> ${highlight(ex.attention, q)}</div>
+        </div>
+
         <details>
           <summary>
-            Descriptif & exemple
+            Descriptif & exemple (détails)
             <span class="chev" aria-hidden="true"></span>
           </summary>
           <div class="detailText">
@@ -1115,7 +1257,6 @@
       </div>
     `;
 
-    // Actions
     c.querySelector("[data-open]")?.addEventListener("click", ()=> openModal(ex.id, q));
     c.querySelector("[data-copy]")?.addEventListener("click", ()=> copyProto(ex.id));
 
@@ -1132,6 +1273,8 @@
   const mMeta  = document.getElementById("mMeta");
   const mDesc  = document.getElementById("mDesc");
   const mExample = document.getElementById("mExample");
+  const mGoals = document.getElementById("mGoals");
+  const mWarn = document.getElementById("mWarn");
   const mProto = document.getElementById("mProto");
   const mVar = document.getElementById("mVar");
   const mTags = document.getElementById("mTags");
@@ -1144,10 +1287,13 @@
 
     mTitle.innerHTML = `EXERCICE #${ex.id} — ${highlight(ex.title, q)}`;
     mMeta.innerHTML = `Catégorie : <span class="badge" style="background:${badge.bg}; margin-left:.35rem;">${badge.label}</span>`;
+
     mDesc.innerHTML = highlight(ex.desc, q);
     mExample.innerHTML = highlight(ex.example, q);
+    mGoals.innerHTML = highlight(ex.goals, q);
 
-    // Protocole
+    mWarn.innerHTML = `${warnIcon()}<div><b>Attention :</b> ${highlight(ex.attention, q)}</div>`;
+
     const order = ["Qui","Quoi","Comment","Combien","Quand","Où","Pourquoi","Pour quoi"];
     mProto.innerHTML = "";
     order.forEach(k=>{
@@ -1163,7 +1309,7 @@
     });
 
     mVar.innerHTML = highlight(ex.variants || "—", q);
-    mTags.innerHTML = (ex.tags || []).map(t => `<span style="display:inline-block; margin:.2rem .25rem .2rem 0; padding:.25rem .5rem; border:1px solid var(--line); border-radius:999px; background:white; font-weight:800; font-size:.82rem;">${highlight(t, q)}</span>`).join("");
+    mTags.innerHTML = (ex.tags || []).map(t => `<span style="display:inline-block; margin:.2rem .25rem .2rem 0; padding:.25rem .5rem; border:1px solid var(--line); border-radius:999px; background:white; font-weight:900; font-size:.82rem;">${highlight(t, q)}</span>`).join("");
 
     overlay.style.display = "flex";
     document.body.style.overflow = "hidden";
@@ -1183,14 +1329,17 @@
   });
 
   /* =========================
-     Copier protocole (texte)
+     Copier protocole
      ========================= */
   async function copyProto(id){
     const ex = EX.find(x=>x.id===id);
     if(!ex) return;
     const order = ["Qui","Quoi","Comment","Combien","Quand","Où","Pourquoi","Pour quoi"];
     let txt = `EXERCICE #${ex.id} — ${ex.title}\nCatégorie : ${catBadge(ex.cat).label}\n\n`;
-    txt += `Descriptif : ${ex.desc}\nExemple : ${ex.example}\n\n`;
+    txt += `Descriptif : ${ex.desc}\n\n`;
+    txt += `Objectifs (pour quoi) : ${ex.goals}\n\n`;
+    txt += `Points d’attention : ${ex.attention}\n\n`;
+    txt += `Exemple : ${ex.example}\n\n`;
     order.forEach(k=>{
       txt += `${k} : ${ex.proto?.[k] ?? "—"}\n`;
     });
@@ -1199,14 +1348,14 @@
 
     try{
       await navigator.clipboard.writeText(txt);
-      toast("Protocole copié ✅");
+      toast("Contenu copié ✅");
     }catch{
       toast("Copie impossible (navigateur) — sélectionne et copie manuellement.");
     }
   }
 
   /* =========================
-     Petit toast
+     Toast
      ========================= */
   function toast(msg){
     const el = document.createElement("div");
@@ -1219,7 +1368,7 @@
     el.style.color = "white";
     el.style.padding = ".6rem .85rem";
     el.style.borderRadius = "999px";
-    el.style.fontWeight = "900";
+    el.style.fontWeight = "950";
     el.style.boxShadow = "0 10px 28px rgba(0,0,0,.25)";
     el.style.zIndex = "200";
     document.body.appendChild(el);
@@ -1251,9 +1400,9 @@
 
 <!--
   ✅ GitHub Pages
-  1) Crée un dépôt (ex: methodes-enquete)
-  2) Mets ce fichier comme /index.html
-  3) Settings → Pages → Deploy from branch → main / root
+  1) Dépôt GitHub → ajoute ce fichier comme index.html
+  2) Settings → Pages → Deploy from branch → main / root
 -->
 </body>
 </html>
+
