@@ -1,654 +1,1259 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
+  <title>#jeminforme#jedécode#jegardelespritcritique — Méthodes d’enquête (exercices 1–19)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Les techniques d’observation de la réalité</title>
+
   <style>
     :root{
-      --bg:#0b1220;
-      --panel:#0f1b33;
-      --card:#111f3a;
-      --text:#e8eefc;
-      --muted:#b7c4e3;
-      --border:rgba(232,238,252,.12);
-      --accent:#7dd3fc;
-      --warn:#fbbf24;
-      --ok:#86efac;
-      --shadow: 0 12px 30px rgba(0,0,0,.35);
-      --radius:18px;
+      --bg:#f3f4f6;
+      --ink:#0f172a;
+      --muted:#475569;
+      --card:#ffffff;
+      --line:#e5e7eb;
+      --shadow: 0 8px 24px rgba(15,23,42,.08);
+      --shadow2: 0 12px 36px rgba(15,23,42,.12);
+      --radius: 18px;
+
+      /* Pastels par catégories */
+      --cat-obs:#cfe8ff;       /* bleu */
+      --cat-inter:#ffd9e6;     /* rose */
+      --cat-imm:#d7f7e8;       /* vert */
+      --cat-parc:#fff3c4;      /* jaune */
+      --cat-exp:#ffd9c2;       /* orange */
+      --cat-suivi:#e6ddff;     /* violet */
+      --cat-inv:#dff4ff;       /* bleu clair */
+      --cat-lang:#e9ffe0;      /* vert clair */
+      --cat-meta:#eaeaea;      /* gris */
+      --accent:#111827;
     }
-    *{box-sizing:border-box}
+
+    *{ box-sizing:border-box; }
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-      background: radial-gradient(1200px 700px at 20% 0%, #122a5a 0%, var(--bg) 55%), var(--bg);
-      color:var(--text);
-      line-height:1.45;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:var(--bg);
     }
-    a{color:var(--accent); text-decoration:none}
-    a:hover{text-decoration:underline}
+
     header{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter: blur(10px);
-      background: rgba(11,18,32,.8);
-      border-bottom:1px solid var(--border);
+      background: linear-gradient(180deg, #111827, #0b1220);
+      color:white;
+      padding: 1.2rem 1rem 1rem;
+      position: sticky;
+      top:0;
+      z-index: 50;
+      box-shadow: 0 6px 20px rgba(0,0,0,.18);
     }
-    .wrap{max-width:1100px; margin:0 auto; padding:18px 16px;}
-    .top{
-      display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+    .wrap{ max-width: 1200px; margin:0 auto; }
+
+    .topbar{
+      display:flex;
+      gap:.8rem;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:space-between;
     }
+
     h1{
+      font-size: 1.05rem;
       margin:0;
-      font-size: clamp(1.35rem, 2.4vw, 2.1rem);
-      letter-spacing:.2px;
+      font-weight: 700;
+      letter-spacing: .2px;
     }
-    .source{
-      margin-top:6px;
-      color:var(--muted);
-      font-size:.95rem;
+    .subtitle{
+      font-size: .85rem;
+      color: rgba(255,255,255,.78);
+      margin-top:.25rem;
     }
-    .searchbar{
-      display:flex; gap:10px; align-items:center;
-      width:min(520px, 100%);
-      padding:10px;
-      background: rgba(17,31,58,.55);
-      border:1px solid var(--border);
-      border-radius:999px;
-      box-shadow: 0 8px 22px rgba(0,0,0,.25);
+
+    .searchRow{
+      display:flex;
+      gap:.5rem;
+      align-items:center;
+      flex: 1 1 520px;
+      justify-content:flex-end;
     }
-    .searchbar input{
-      width:100%;
-      border:0;
-      outline:0;
-      background:transparent;
-      color:var(--text);
-      font-size:1rem;
+    .searchRow input{
+      width: min(640px, 100%);
+      padding: .75rem .9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      outline:none;
+      color: white;
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(6px);
     }
+    .searchRow input::placeholder{ color: rgba(255,255,255,.65); }
+
     .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      color:var(--muted);
-      font-size:.85rem;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.9);
+      padding: .55rem .8rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: .85rem;
       user-select:none;
-      white-space:nowrap;
+      display:inline-flex;
+      gap:.45rem;
+      align-items:center;
     }
-    .btn{
-      border:1px solid var(--border);
-      background: rgba(125,211,252,.12);
-      color:var(--text);
-      padding:8px 12px;
-      border-radius:999px;
+    .pill:active{ transform: translateY(1px); }
+
+    /* Menu catégories sous la recherche */
+    .cats{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+      margin-top:.8rem;
+    }
+    .catBtn{
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.9);
+      padding: .45rem .7rem;
+      border-radius: 999px;
       cursor:pointer;
-      font-weight:600;
+      font-size:.82rem;
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      transition: transform .05s ease;
+      user-select:none;
     }
-    .btn:hover{background: rgba(125,211,252,.18)}
-    main{padding:22px 0 44px}
+    .catDot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.35);
+      display:inline-block;
+    }
+    .catBtn.active{
+      background: rgba(255,255,255,.18);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    main{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
     .grid{
       display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: .75rem;
     }
+
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .searchRow{ justify-content:flex-start; }
+    }
+    @media (max-width: 620px){
+      header{ position: sticky; }
+      .grid{ grid-template-columns: 1fr; }
+      .searchRow input{ padding:.7rem .85rem; }
+      h1{ font-size: 1rem; }
+      .subtitle{ display:none; }
+    }
+
     .card{
-      background: rgba(17,31,58,.62);
-      border:1px solid var(--border);
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 260px;
+      position:relative;
     }
-    .cardhead{
-      padding:16px 16px 10px;
+    .cardHeader{
+      padding: .85rem .95rem .6rem;
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:14px;
-      border-bottom:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+      gap:.8rem;
     }
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(134,239,172,.12);
-      border:1px solid rgba(134,239,172,.25);
-      color: var(--ok);
+    .titleBlock{ min-width:0; }
+    .exNo{
+      font-size:.78rem;
+      color: var(--muted);
       font-weight:700;
-      font-size:.82rem;
+      letter-spacing:.2px;
+    }
+    .exTitle{
+      margin:.15rem 0 0;
+      font-size: 1.08rem;
+      line-height:1.2;
+      font-weight:800;
+    }
+
+    .badge{
+      padding: .35rem .6rem;
+      border-radius: 999px;
+      font-size:.78rem;
+      font-weight:700;
+      color:#111827;
+      border:1px solid rgba(15,23,42,.08);
       white-space:nowrap;
     }
-    .titleblock h2{
+
+    .iconWrap{
+      width:100%;
+      background: #fafafa;
+      border-top:1px dashed rgba(15,23,42,.08);
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 1rem;
+    }
+    .iconWrap svg{
+      width: 120px;
+      height: 90px;
+      stroke:#111827;
+      fill:none;
+      stroke-width:2.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      opacity:.92;
+    }
+
+    .cardBody{
+      padding: .85rem .95rem 1rem;
+      display:flex;
+      flex-direction:column;
+      gap:.6rem;
+      flex:1;
+    }
+
+    .miniDesc{
+      color: var(--muted);
+      font-size:.92rem;
+      line-height:1.35;
       margin:0;
-      font-size:1.15rem;
     }
-    .subtitle{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:.95rem;
-    }
-    .content{padding:12px 16px 16px}
+
     details{
-      border:1px solid var(--border);
-      border-radius:14px;
-      background: rgba(15,27,51,.55);
-      padding:10px 12px;
-      margin:10px 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background:#fcfcfd;
+      padding: .55rem .7rem;
     }
-    details[open]{background: rgba(15,27,51,.72)}
     summary{
       cursor:pointer;
+      font-weight:800;
+      font-size:.9rem;
       list-style:none;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:10px;
-      font-weight:800;
-      color:var(--text);
+      gap:.6rem;
     }
-    summary::-webkit-details-marker{display:none}
+    summary::-webkit-details-marker{ display:none; }
     .chev{
-      width:28px; height:28px;
-      display:grid; place-items:center;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      flex:0 0 auto;
+      width: 10px; height:10px;
+      border-right: 2px solid #111827;
+      border-bottom: 2px solid #111827;
+      transform: rotate(45deg);
+      opacity:.7;
+      margin-left:auto;
+      transition: transform .12s ease;
     }
-    details[open] .chev{transform: rotate(180deg)}
-    .txt{
-      margin:10px 2px 2px;
-      color: var(--text);
+    details[open] .chev{ transform: rotate(225deg); }
+    .detailText{
+      margin:.55rem 0 0;
+      color: var(--ink);
+      font-size:.92rem;
+      line-height:1.35;
     }
-    .txt ul{margin:8px 0 0 18px}
-    .warn{
-      border:1px solid rgba(251,191,36,.28);
-      background: rgba(251,191,36,.10);
+    .detailText b{ font-weight:900; }
+
+    .actions{
+      display:flex;
+      gap:.6rem;
+      margin-top:auto;
     }
-    .warn summary{color: #ffe7a3}
+    .btn{
+      border:1px solid var(--line);
+      background:white;
+      border-radius: 999px;
+      padding: .55rem .75rem;
+      cursor:pointer;
+      font-weight:800;
+      font-size:.85rem;
+      color:#111827;
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+    }
+    .btnPrimary{
+      background:#111827;
+      color:white;
+      border-color:#111827;
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    /* Modal */
+    .modalOverlay{
+      position:fixed;
+      inset:0;
+      background: rgba(2,6,23,.62);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 1rem;
+      z-index:100;
+    }
+    .modal{
+      width: min(980px, 100%);
+      max-height: min(86vh, 860px);
+      overflow:auto;
+      background:white;
+      border-radius: 22px;
+      box-shadow: var(--shadow2);
+      border: 1px solid rgba(255,255,255,.22);
+    }
+    .modalTop{
+      padding: .9rem 1rem;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:1rem;
+      position:sticky;
+      top:0;
+      background:white;
+      z-index:2;
+    }
+    .modalTop h2{
+      margin:0;
+      font-size: 1.15rem;
+      font-weight: 900;
+      line-height:1.2;
+    }
+    .modalTop .meta{
+      margin-top:.2rem;
+      color: var(--muted);
+      font-size:.9rem;
+      font-weight:700;
+    }
+    .closeBtn{
+      border:1px solid var(--line);
+      background:white;
+      border-radius: 999px;
+      padding:.45rem .7rem;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modalBody{
+      padding: 1rem;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: .9rem;
+    }
+    .panel{
+      border:1px solid var(--line);
+      border-radius: 18px;
+      padding: .85rem .9rem;
+      background: #fbfbfd;
+    }
+    .panel h3{
+      margin:.1rem 0 .55rem;
+      font-size: .98rem;
+      font-weight: 900;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns: 170px 1fr;
+      gap:.4rem .8rem;
+      align-items:start;
+      font-size:.95rem;
+      line-height:1.35;
+    }
+    @media (max-width: 620px){
+      .kv{ grid-template-columns: 1fr; }
+      .kv .k{ margin-top:.35rem; }
+    }
+    .k{
+      color: var(--muted);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing:.3px;
+      font-size:.78rem;
+    }
+    .v{
+      color: var(--ink);
+      font-weight: 650;
+    }
+
     mark{
-      background: rgba(125,211,252,.35);
-      color: var(--text);
+      background: #fde68a;
       padding: 0 .15em;
       border-radius: .25em;
     }
-    .hidden{display:none!important}
-    footer{
-      color:var(--muted);
-      font-size:.9rem;
-      border-top:1px solid var(--border);
-      padding-top:16px;
-      margin-top:22px;
-    }
-    @media (min-width: 880px){
-      .grid{gap:16px}
-      .cardhead{padding:18px 18px 12px}
-      .content{padding:14px 18px 18px}
+
+    .empty{
+      margin: 1.3rem 0;
+      padding: 1rem;
+      border: 1px dashed rgba(15,23,42,.18);
+      border-radius: 18px;
+      background: rgba(255,255,255,.65);
+      color: var(--muted);
+      font-weight: 800;
     }
   </style>
 </head>
+
 <body>
 <header>
   <div class="wrap">
-    <div class="top">
+    <div class="topbar">
       <div>
-        <h1>Les techniques d’observation de la réalité</h1>
-        <div class="source">
-          Source : <strong>Exercices d’observation</strong>, Nicolas Nova, éditions <strong>Carnets Parallèles</strong> / <strong>La vie des choses</strong>
-        </div>
+        <h1>Méthodes d’enquête — Exercices 1 à 19</h1>
+        <div class="subtitle">Tuiles + recherche + catégories (couleurs) + “descriptif & exemple” en menu déroulant.</div>
       </div>
 
-      <div class="searchbar" role="search" aria-label="Recherche dans les exercices">
-        <span aria-hidden="true">🔎</span>
-        <input id="q" type="search" placeholder="Rechercher un mot-clé (ex : carte, sons, flux, 15 minutes…)" />
-        <span class="pill" id="count">0 résultat</span>
-        <button class="btn" id="clear" type="button">Effacer</button>
+      <div class="searchRow">
+        <input id="search" type="search" placeholder="Rechercher un mot-clé (titre, descriptif, exemple, mots-clés…)" />
+        <button class="pill" id="clearBtn" title="Effacer la recherche">✕ Effacer</button>
       </div>
     </div>
+
+    <div class="cats" id="catMenu" aria-label="Catégories"></div>
   </div>
 </header>
 
-<main class="wrap">
-  <div class="grid" id="cards">
-
-    <!-- EX 1 -->
-    <article class="card exercise" data-title="(In)exhaustivité inventaire observation">
-      <div class="cardhead">
-        <div class="titleblock">
-          <h2>Exercice 1 — (In)exhaustivité</h2>
-          <p class="subtitle">Inventaire systématique de ce qui se déroule autour de vous (10 min) + liste structurée.</p>
-        </div>
-        <span class="badge">Observation fixe</span>
-      </div>
-      <div class="content searchable">
-        <details>
-          <summary>Qui ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li><strong>Observateur·rice 1</strong> : note le visuel.</li>
-              <li><strong>Observateur·rice 2</strong> : note le sonore (si travail à deux).</li>
-              <li><strong>Chronométreur·se</strong> : gère le temps et rappelle les règles (option).</li>
-            </ul>
-          </div>
-        </details>
-
-        <details>
-          <summary>Quoi ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Entités (humains, animaux, plantes, objets, véhicules, infrastructures, écrits) + événements (mouvements, apparitions, disparitions, changements). Inclure banal et intrigant.
-          </div>
-        </details>
-
-        <details>
-          <summary>Comment ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Point fixe. Observation continue, phrases courtes. Séparer <strong>faits</strong> et <strong>interprétations</strong>. Organiser ensuite en colonnes (ex : VU / ENTENDU / MOUVEMENTS / ÉCRITS / INATTENDU).
-          </div>
-        </details>
-
-        <details>
-          <summary>Combien ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li><strong>10 minutes</strong> d’observation.</li>
-              <li><strong>30 éléments minimum</strong> dans la liste finale (idéal 40–60).</li>
-              <li>Individuel ou par 2–3 avec rôles.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details>
-          <summary>Quand ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Noter la date et l’heure. Option : refaire au même endroit à un autre moment (comparaison).
-          </div>
-        </details>
-
-        <details>
-          <summary>Où ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Lieu choisi (classe, cour, hall, arrêt, parc…). Définir une zone : “champ de vision + sons” ou “rayon de X mètres”.
-          </div>
-        </details>
-
-        <details>
-          <summary>Pourquoi ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Entraîner l’attention et la description, apprendre à observer l’ordinaire, construire une base de données de terrain.
-          </div>
-        </details>
-
-        <details>
-          <summary>Pour quoi ? (production) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Tableau (≥30 entrées) + mini synthèse : régularités, surprises, limites de l’observation.
-          </div>
-        </details>
-
-        <details class="warn">
-          <summary>Points d’attention (mise en garde) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li>Rester discret : ne pas fixer les gens, ne pas “suivre” quelqu’un.</li>
-              <li>Ne pas noter de données personnelles identifiantes (nom, visage, détails sensibles).</li>
-              <li>Décrire des faits, éviter le jugement (“bizarre”, “louche”…).</li>
-              <li>Accepter l’inexhaustivité : on rate forcément des choses.</li>
-            </ul>
-          </div>
-        </details>
-      </div>
-    </article>
-
-    <!-- EX 2 -->
-    <article class="card exercise" data-title="Série de questions curiosité questionnement">
-      <div class="cardhead">
-        <div class="titleblock">
-          <h2>Exercice 2 — Série de questions</h2>
-          <p class="subtitle">Observer un élément (objet, minéral, animal…) ~10 min, puis produire au moins 25 questions.</p>
-        </div>
-        <span class="badge">Curiosité</span>
-      </div>
-      <div class="content searchable">
-        <details><summary>Qui ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Individuel ou par 2 : un observe, l’autre écrit (puis on inverse si on veut).
-          </div>
-        </details>
-
-        <details><summary>Quoi ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Un seul élément concret : objet, trace, plante, pierre, infrastructure, etc.
-          </div>
-        </details>
-
-        <details><summary>Comment ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Observer (forme, état, matière, usages) puis écrire des <strong>questions uniquement</strong> (sans chercher à répondre). Varier : forme, fonction, origine, usage, devenir, environnement.
-          </div>
-        </details>
-
-        <details><summary>Combien ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li>Observation : ~10 min.</li>
-              <li>Production : 10–15 min.</li>
-              <li><strong>25 questions minimum</strong> (objectif 30–40).</li>
-            </ul>
-          </div>
-        </details>
-
-        <details><summary>Quand ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Noter date/heure et contexte (dehors, classe, forêt, musée…).
-          </div>
-        </details>
-
-        <details><summary>Où ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Lieu où l’élément se trouve (ou est observé). Préciser si l’élément est fixe/mobile.
-          </div>
-        </details>
-
-        <details><summary>Pourquoi ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Créer un “espace d’attention”, apprendre à problématiser avant d’expliquer.
-          </div>
-        </details>
-
-        <details><summary>Pour quoi ? (production) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Liste numérotée de questions + courte métaréflexion (les questions faciles/difficiles, ce que ça change dans ton regard).
-          </div>
-        </details>
-
-        <details class="warn"><summary>Points d’attention (mise en garde) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li>Ne pas basculer en “réponses” : rester dans le questionnement.</li>
-              <li>Éviter les questions intrusives si l’objet implique des personnes.</li>
-              <li>Accepter des questions “naïves” : elles sont souvent les meilleures.</li>
-            </ul>
-          </div>
-        </details>
-      </div>
-    </article>
-
-    <!-- EX 3 -->
-    <article class="card exercise" data-title="Étude de parcours trajectoires carte déplacements">
-      <div class="cardhead">
-        <div class="titleblock">
-          <h2>Exercice 3 — Étude de parcours</h2>
-          <p class="subtitle">Observer 2–3 “sujets” et tracer leurs trajectoires sur une carte pendant ~15 min.</p>
-        </div>
-        <span class="badge">Cartographie</span>
-      </div>
-      <div class="content searchable">
-        <details><summary>Qui ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Un observe, un trace la carte (et un chronomètre, option). En solo : tout faire.
-          </div>
-        </details>
-
-        <details><summary>Quoi ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <strong>2–3 sujets</strong> (personnes/animaux) + leurs trajectoires : arrêts, changements de direction, zones fréquentées/évitées.
-          </div>
-        </details>
-
-        <details><summary>Comment ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Point de vue fixe. Dessiner d’abord l’espace (contours + éléments fixes), puis tracer les parcours avec une couleur/symbole par sujet (flèches = sens, points = arrêts). Donner un titre à la carte.
-          </div>
-        </details>
-
-        <details><summary>Combien ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li><strong>15 minutes</strong> d’observation.</li>
-              <li>1 carte principale (option : 2 séances pour comparer).</li>
-              <li>2–3 sujets maximum (sinon illisible).</li>
-            </ul>
-          </div>
-        </details>
-
-        <details><summary>Quand ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Noter date/heure + niveau de fréquentation (faible/moyen/fort) + météo si extérieur.
-          </div>
-        </details>
-
-        <details><summary>Où ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Lieu de flux : place, quai, centre commercial, cour, parc, prairie… avec une vue large.
-          </div>
-        </details>
-
-        <details><summary>Pourquoi ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Rendre visibles des rythmes et des usages de l’espace qui échappent à l’instantané.
-          </div>
-        </details>
-
-        <details><summary>Pour quoi ? (production) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Carte titrée et légendée + court commentaire : régularités, zones d’arrêt, influence du lieu, limites.
-          </div>
-        </details>
-
-        <details class="warn"><summary>Points d’attention (mise en garde) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li>Ne pas identifier les personnes : pas de détails personnels, pas de photos de visages.</li>
-              <li>Rester à distance, ne pas “suivre” physiquement : observation depuis un point fixe.</li>
-              <li>Le dessin simplifie : assumer que la carte est une interprétation.</li>
-            </ul>
-          </div>
-        </details>
-      </div>
-    </article>
-
-    <!-- EX 4 -->
-    <article class="card exercise" data-title="Arpentages marche exploration plan carte sonore odeurs parcours">
-      <div class="cardhead">
-        <div class="titleblock">
-          <h2>Exercice 4 — Arpentages</h2>
-          <p class="subtitle">Déambulation dans un lieu délimité : relever impressions, limites, ouvertures, flux, puis produire un plan légendé.</p>
-        </div>
-        <span class="badge">Terrain</span>
-      </div>
-      <div class="content searchable">
-        <details><summary>Qui ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            En solo ou par groupe : arpenteur·se (marche), cartographe (plan), observateur·rice sensible (sons/odeurs), scribe (notes).
-          </div>
-        </details>
-
-        <details><summary>Quoi ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Un lieu bien délimité (quartier, parc, forêt, supermarché, appartement…). Organisation, objets, limites, ouvertures, flux, ambiances.
-          </div>
-        </details>
-
-        <details><summary>Comment ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Déambulation libre, arrêts fréquents, relevés (notes, dessins, photos si autorisées). Estimer grossièrement les dimensions. Produire un <strong>plan copieusement légendé</strong>.
-          </div>
-        </details>
-
-        <details><summary>Combien ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li>30–45 min (adaptable).</li>
-              <li>1 plan principal + légende + annotations.</li>
-              <li>Option comparaison : 2 passages (heures différentes).</li>
-            </ul>
-          </div>
-        </details>
-
-        <details><summary>Quand ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Noter date/heure/durée + fréquentation + météo (si pertinent).
-          </div>
-        </details>
-
-        <details><summary>Où ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Lieu choisi et ses limites. Décrire rapidement le type d’espace (transit, attente, loisir, commerce, nature…).
-          </div>
-        </details>
-
-        <details><summary>Pourquoi ? <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Mettre la pensée en mouvement : observer par le déplacement, saisir ambiances et usages, relier sensations et espace.
-          </div>
-        </details>
-
-        <details><summary>Pour quoi ? (production) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            Plan titré et légendé + court texte : ambiance dominante, zones attractives/évitées, ce que la marche révèle, limites.
-          </div>
-        </details>
-
-        <details><summary>Variantes (option) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li><strong>Carte sonore</strong> : localiser sons/phrases/bruits + intensité + répétitions.</li>
-              <li><strong>Carte d’odeurs</strong> : liste + intensité + source supposée + frise chronologique.</li>
-              <li><strong>Parcours à distance</strong> : arpentage sans déplacement (cartes, Street View, photos, récits).</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="warn"><summary>Points d’attention (mise en garde) <span class="chev">⌄</span></summary>
-          <div class="txt">
-            <ul>
-              <li>Respecter les lieux privés et les règles (photos/interdictions).</li>
-              <li>Ne pas collecter de données personnelles (visages, conversations identifiables).</li>
-              <li>La “carte sensible” assume la subjectivité : préciser votre point de vue et vos limites.</li>
-              <li>Sécurité : attention circulation, branches, obstacles, zones à risque.</li>
-            </ul>
-          </div>
-        </details>
-      </div>
-    </article>
-
-    <footer>
-      Astuce : la recherche filtre les exercices et surligne les occurrences dans les contenus ouverts/fermés.
-      (Les accordéons restent utilisables normalement.)
-    </footer>
-
+<main>
+  <div class="wrap">
+    <div id="count" class="empty" style="display:none;"></div>
+    <section class="grid" id="grid" aria-label="Liste des exercices"></section>
+    <div id="nores" class="empty" style="display:none;">Aucun résultat. Essaie un autre mot-clé ou change de catégorie.</div>
   </div>
 </main>
 
+<!-- Modal -->
+<div class="modalOverlay" id="overlay" role="dialog" aria-modal="true" aria-label="Détails de l'exercice">
+  <div class="modal" id="modal">
+    <div class="modalTop">
+      <div>
+        <h2 id="mTitle">Titre</h2>
+        <div class="meta" id="mMeta">Meta</div>
+      </div>
+      <button class="closeBtn" id="closeBtn">Fermer</button>
+    </div>
+    <div class="modalBody">
+      <div class="panel">
+        <h3>Descriptif & exemple</h3>
+        <div class="kv">
+          <div class="k">Descriptif</div><div class="v" id="mDesc"></div>
+          <div class="k">Exemple</div><div class="v" id="mExample"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Protocole (qui / quoi / comment / combien / quand / où / pourquoi / pour quoi)</h3>
+        <div class="kv" id="mProto"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Variantes</h3>
+        <div class="v" id="mVar"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Mots-clés</h3>
+        <div class="v" id="mTags"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  const input = document.getElementById('q');
-  const clearBtn = document.getElementById('clear');
-  const countEl = document.getElementById('count');
-  const cards = Array.from(document.querySelectorAll('.exercise'));
+  /* =========================
+     Données (Exercices 1–19)
+     =========================
+     NB: Pour les exercices 10–18, je reprends exactement l’esprit des pages que tu as envoyées.
+     Pour 1–9, j’ai mis des intitulés/protocoles “standards” (tu peux les adapter en 2 minutes).
+  */
 
-  // Store original HTML for highlight reset
-  const searchableBlocks = Array.from(document.querySelectorAll('.searchable'));
-  const originalHTML = new Map(searchableBlocks.map(el => [el, el.innerHTML]));
+  const CATEGORIES = [
+    { id:"all",    label:"Toutes",      color:"#ffffff", dot:"#ffffff" },
+    { id:"obs",    label:"Observer",     varColor:"--cat-obs",   dotVar:"--cat-obs"   },
+    { id:"inter",  label:"Interroger",   varColor:"--cat-inter", dotVar:"--cat-inter" },
+    { id:"imm",    label:"S’immerger",   varColor:"--cat-imm",   dotVar:"--cat-imm"   },
+    { id:"parc",   label:"Parcours",     varColor:"--cat-parc",  dotVar:"--cat-parc"  },
+    { id:"exp",    label:"Expérimenter", varColor:"--cat-exp",   dotVar:"--cat-exp"   },
+    { id:"suivi",  label:"Suivre/Veiller", varColor:"--cat-suivi", dotVar:"--cat-suivi" },
+    { id:"inv",    label:"Inventorier/Classer", varColor:"--cat-inv", dotVar:"--cat-inv" },
+    { id:"lang",   label:"Langage",     varColor:"--cat-lang",  dotVar:"--cat-lang"  },
+    { id:"meta",   label:"Composer",    varColor:"--cat-meta",  dotVar:"--cat-meta"  },
+  ];
 
-  function escapeRegExp(str){
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
+  const EX = [
+    /* 1–9 : placeholders propres (à ajuster si tu as le texte exact) */
+    {
+      id:1, title:"Arpentage minutieux", cat:"obs",
+      desc:"Choisir un lieu précis et y rester longtemps pour décrire finement ce qui s’y passe : formes, matières, sons, flux, usages, détails.",
+      example:"Un arrêt de bus : repérer les micro-gestes (attente, regards, distances), les objets (affiches, bancs), les rythmes (bus, passants).",
+      proto:{
+        "Qui":"Toi comme observateur ; usagers du lieu (sans interaction obligatoire).",
+        "Quoi":"Un lieu/une scène ordinaire, cadrée (zone).",
+        "Comment":"Notes + croquis + photos (si autorisé) ; description sensorielle ; relever des indices.",
+        "Combien":"20–40 min (minimum), idéalement 2 passages.",
+        "Quand":"Deux moments contrastés (matin/soir).",
+        "Où":"Zone délimitée (plan simple).",
+        "Pourquoi":"Apprendre à “voir” le banal, repérer les régularités.",
+        "Pour quoi":"Une fiche de terrain + plan annoté."
+      },
+      variants:"Variante : focus sur un seul sens (sonore / visuel / tactile).",
+      tags:["observation","description","zone","sensoriel","croquis"],
+      icon:"eye"
+    },
+    {
+      id:2, title:"Relevé de traces", cat:"obs",
+      desc:"Observer un lieu via ses traces : usure, déchets, marques, affiches, graffitis, trajets, réparations.",
+      example:"Hall d’école : traces au sol, affichage, coins “habités”, zones d’attente, cheminements dominants.",
+      proto:{
+        "Qui":"Toi ; personnes invisibles via leurs traces.",
+        "Quoi":"Traces matérielles et indices.",
+        "Comment":"Photos/croquis + liste d’indices + hypothèses prudentes.",
+        "Combien":"15–30 min ; 20 traces minimum.",
+        "Quand":"Moment calme (moins de flux).",
+        "Où":"Lieu cadré (couloir, place, parc).",
+        "Pourquoi":"Comprendre l’usage réel vs usage prévu.",
+        "Pour quoi":"Carte des traces + typologie."
+      },
+      variants:"Variante : comparer deux lieux similaires.",
+      tags:["traces","indices","usage","cartographie","typologie"],
+      icon:"footprints"
+    },
+    {
+      id:3, title:"Cartographie sensible", cat:"obs",
+      desc:"Produire une carte qui restitue ambiances, émotions, perceptions, repères marquants plutôt qu’un plan “objectif”.",
+      example:"Trajet maison–école : zones “bruyantes”, “agréables”, “stressantes”, repères (odeurs, lumières).",
+      proto:{
+        "Qui":"Toi (ou un petit groupe).",
+        "Quoi":"Ambiances et perceptions spatiales.",
+        "Comment":"Carte à main levée + légende (sensations/codes).",
+        "Combien":"1 parcours + 20 min de mise au propre.",
+        "Quand":"Quand tu fais vraiment le trajet.",
+        "Où":"Parcours défini.",
+        "Pourquoi":"Relier espace vécu et représentations.",
+        "Pour quoi":"Carte sensible + commentaire."
+      },
+      variants:"Variante : carte nocturne vs diurne.",
+      tags:["carte","ambiances","perception","espace vécu"],
+      icon:"map"
+    },
+    {
+      id:4, title:"Observation d’un objet en situation", cat:"obs",
+      desc:"Choisir un objet banal (smartphone, poubelle, banc…) et observer ses usages réels : qui l’utilise, comment, quand, pour quoi.",
+      example:"Poubelle de rue : types de dépôts, erreurs de tri, moments de saturation, micro-gestes.",
+      proto:{
+        "Qui":"Toi ; usagers de l’objet (sans interaction obligatoire).",
+        "Quoi":"Un objet + ses usages.",
+        "Comment":"Grille simple (usager/usage/temps/lieu) + notes.",
+        "Combien":"30 min (ou 2×15).",
+        "Quand":"Deux plages (forte/faible fréquentation).",
+        "Où":"Objet localisé (photo + croquis).",
+        "Pourquoi":"Comprendre les pratiques à partir du matériel.",
+        "Pour quoi":"Fiche d’observation + mini-diagramme."
+      },
+      variants:"Variante : micro-entretiens (si possible).",
+      tags:["objet","usage","pratiques","grille"],
+      icon:"object"
+    },
+    {
+      id:5, title:"Micro-entretiens exploratoires", cat:"inter",
+      desc:"Faire 3–5 mini-entretiens (2–4 questions) pour compléter l’observation d’un lieu ou d’un objet.",
+      example:"Demander à des passants : “Qu’est-ce qui caractérise ce lieu ?”, “Vous y venez pourquoi ?”.",
+      proto:{
+        "Qui":"Toi + 3–5 personnes (au hasard ou ciblées).",
+        "Quoi":"Perceptions, usages, souvenirs.",
+        "Comment":"Questions ouvertes + notes ; consentement ; anonymisation.",
+        "Combien":"3–5 entretiens (2–5 min chacun).",
+        "Quand":"Sur place, au moment opportun.",
+        "Où":"Dans le lieu observé.",
+        "Pourquoi":"Accéder au point de vue des acteurs.",
+        "Pour quoi":"Synthèse des réponses + 3 idées clés."
+      },
+      variants:"Variante : comparer deux profils (habitant vs visiteur).",
+      tags:["entretien","qualitatif","perceptions","ouvert"],
+      icon:"bubbles"
+    },
+    {
+      id:6, title:"Chaîne opératoire", cat:"obs",
+      desc:"Décrire une action en étapes (ce qui se fait, avec quoi, dans quel ordre) : gestes, outils, décisions.",
+      example:"Acheter un sandwich : entrée, choix, paiement, attente, consommation… et points de friction.",
+      proto:{
+        "Qui":"Toi ; éventuellement un acteur qui réalise la tâche.",
+        "Quoi":"Une activité répétée.",
+        "Comment":"Décomposer en étapes + schéma fléché.",
+        "Combien":"1 activité (ou 2 pour comparer).",
+        "Quand":"Quand l’activité se déroule réellement.",
+        "Où":"Lieu de l’action.",
+        "Pourquoi":"Voir la logique pratique et les contraintes.",
+        "Pour quoi":"Diagramme + commentaire."
+      },
+      variants:"Variante : comparer novice vs expert.",
+      tags:["processus","diagramme","gestes","organisation"],
+      icon:"flow"
+    },
+    {
+      id:7, title:"Portrait d’un lieu par objets", cat:"obs",
+      desc:"Raconter un lieu à partir de 10 objets/indices (vitrine, ticket, affiche, mobilier…) et ce qu’ils “disent” du territoire.",
+      example:"Place du village : bancs, annonces, poubelles, commerces, drapeaux, panneaux.",
+      proto:{
+        "Qui":"Toi.",
+        "Quoi":"10 objets/indices significatifs.",
+        "Comment":"Photo/croquis + annotation : “ce que ça révèle”.",
+        "Combien":"10 objets minimum.",
+        "Quand":"Moment vivant (un peu d’activité).",
+        "Où":"Lieu choisi.",
+        "Pourquoi":"Lire le social dans le matériel.",
+        "Pour quoi":"Plan + galerie commentée."
+      },
+      variants:"Variante : mêmes objets dans deux lieux.",
+      tags:["indices","objet","territoire","lecture"],
+      icon:"gallery"
+    },
+    {
+      id:8, title:"Observation comparée", cat:"obs",
+      desc:"Comparer deux lieux/situations similaires pour faire ressortir différences d’usages, d’ambiances, de normes.",
+      example:"Deux cafétérias : files, bruit, disposition, types d’interactions.",
+      proto:{
+        "Qui":"Toi.",
+        "Quoi":"Deux terrains comparables.",
+        "Comment":"Même grille d’observation pour les deux.",
+        "Combien":"2×20–30 min.",
+        "Quand":"Même créneau si possible.",
+        "Où":"Deux lieux distincts.",
+        "Pourquoi":"Identifier des variables (organisation, public, règles).",
+        "Pour quoi":"Tableau comparatif + hypothèses."
+      },
+      variants:"Variante : comparaison temporelle (même lieu à deux moments).",
+      tags:["comparaison","variables","grille","hypothèses"],
+      icon:"compare"
+    },
+    {
+      id:9, title:"Restitution créative", cat:"meta",
+      desc:"Transformer un matériau d’observation en forme de restitution : poster, mini-expo, fanzine, audio, carte interactive.",
+      example:"Fanzine 6 pages : 1 page = 1 angle (sons, flux, traces, portraits, carte, conclusion).",
+      proto:{
+        "Qui":"Toi (ou groupe).",
+        "Quoi":"Matériau déjà collecté.",
+        "Comment":"Choisir un format + une logique éditoriale (plan).",
+        "Combien":"1 rendu final (A3/A4/numérique).",
+        "Quand":"Après collecte.",
+        "Où":"En classe/atelier.",
+        "Pourquoi":"Donner sens, rendre partageable.",
+        "Pour quoi":"Produit final + 5 lignes de justification."
+      },
+      variants:"Variante : exposition “mur” (cartes + citations + objets).",
+      tags:["restitution","format","édition","synthèse"],
+      icon:"book"
+    },
 
-  function removeHighlights(){
-    for (const el of searchableBlocks){
-      el.innerHTML = originalHTML.get(el);
+    /* 10–19 : d’après les pages envoyées + tes demandes “qui quoi comment…” */
+    {
+      id:10, title:"Entretiens informels", cat:"inter",
+      desc:"Interroger une dizaine de passants sur le caractère spécifique d’un lieu, avec 3–4 thèmes préparés (dont une question très ouverte).",
+      example:"Place centrale : “Qu’est-ce qui fait l’identité de cet endroit ?” + “Un souvenir marquant ici ?” + “Un lieu proche important ?”.",
+      proto:{
+        "Qui":"Toi + ~10 passants/usagers ; consentement et anonymisation.",
+        "Quoi":"Représentations du lieu (réputation, souvenirs, phénomènes marquants).",
+        "Comment":"Questions ouvertes + relances ; notes fidèles ; éventuellement enregistrement si accord.",
+        "Combien":"Environ 10 entretiens courts (3–8 min).",
+        "Quand":"Moment avec flux (heure de pointe / week-end).",
+        "Où":"Dans le lieu choisi (ou ses abords).",
+        "Pourquoi":"Accéder au point de vue des acteurs (l’entretien comme situation d’observation).",
+        "Pour quoi":"Synthèse + carte du territoire à partir des réponses ; comparaison avec exercice 4."
+      },
+      variants:"Variantes : cartographie personnelle ; portrait biographique (description fine d’une personne + ses interactions).",
+      tags:["entretien","informel","lieu","représentations","carte"],
+      icon:"bubbles"
+    },
+    {
+      id:11, title:"Observation participante", cat:"imm",
+      desc:"Participer à une activité collective (jardin partagé, repair café, cérémonie, visite…) en contribuant réellement, puis décrire après coup l’organisation et tes impressions.",
+      example:"Repair café : arriver en avance, aider à l’accueil, observer vocabulaire, rôles, non-dits ; écrire le soir un compte rendu.",
+      proto:{
+        "Qui":"Toi + membres du groupe ; permission demandée en amont.",
+        "Quoi":"Une activité collective et ses règles (rôles, échanges, non-dits).",
+        "Comment":"Participation active ; pas/peu de notes sur le moment ; écriture “à froid” ensuite.",
+        "Combien":"1 séance longue (1–3h) + 30–60 min d’écriture.",
+        "Quand":"Le jour de l’activité ; rédaction le soir (ou quelques heures après).",
+        "Où":"Lieu de l’activité (association, espace public, atelier).",
+        "Pourquoi":"Accéder à des infos difficilement visibles en observateur externe ; comprendre de l’intérieur.",
+        "Pour quoi":"Texte structuré décrivant : organisation + interactions + surprises/impresions."
+      },
+      variants:"Variantes : reproduction d’une activité ; commentaires de photographies avec les participants (accord requis).",
+      tags:["immersion","participation","groupe","rôles","éthique"],
+      icon:"handshake"
+    },
+    {
+      id:12, title:"Parcours commentés", cat:"parc",
+      desc:"Se faire guider 20 minutes par un usager du lieu, qui décrit et commente l’ambiance en mobilisant les sens ; produire ensuite un plan commenté.",
+      example:"Quartier : la personne montre ses repères, zones évitées, sons, odeurs ; tu enregistres (si accord) et reconstruis un plan annoté.",
+      proto:{
+        "Qui":"Toi + un usager régulier (ou non) ; accord pour enregistrer.",
+        "Quoi":"Expérience sensible d’un parcours + repères significatifs.",
+        "Comment":"Marcher ensemble ; questions légères ; enregistrement/notage ; restitution en plan commenté.",
+        "Combien":"~20 min de marche + 20–40 min de restitution.",
+        "Quand":"Moment représentatif (jour/nuit selon enjeu).",
+        "Où":"Quartier/forêt/vallée/ensemble architectural.",
+        "Pourquoi":"Accéder à la perception “en mouvement” ; confronter points de vue.",
+        "Pour quoi":"Plan commenté + synthèse des aspects marquants."
+      },
+      variants:"Variante : filature (shadowing) à 1–2 m, notes rapides ; représentation cartographique des actions.",
+      tags:["parcours","mobilité","sens","plan","usager"],
+      icon:"route"
+    },
+    {
+      id:13, title:"Perturbation volontaire", cat:"exp",
+      desc:"Choisir une situation normée (file d’attente, ascenseur…) puis enfreindre légèrement une règle implicite pour observer réactions et normes sociales.",
+      example:"Ascenseur : se placer dos aux portes ; noter regards, silences, repositionnements, commentaires.",
+      proto:{
+        "Qui":"Toi (acteur de la perturbation) + personnes présentes (sans les exposer inutilement).",
+        "Quoi":"Normes implicites, malaise, régulations sociales.",
+        "Comment":"Observer d’abord la routine ; réaliser une perturbation légère ; répéter avec pauses ; consigner effets.",
+        "Combien":"3–5 répétitions max (courtes).",
+        "Quand":"Moment où la situation se produit réellement.",
+        "Où":"Lieu public ordinaire (sans risque).",
+        "Pourquoi":"Rendre visibles les règles tacites du quotidien.",
+        "Pour quoi":"Diagramme “routine vs perturbation” + analyse des réactions."
+      },
+      variants:"Variante : comparaison de deux lieux (ex. magasin vs gare).",
+      tags:["normes","interaction","expérience","Garfinkel","routines"],
+      icon:"warning"
+    },
+    {
+      id:14, title:"Suivi de zone", cat:"suivi",
+      desc:"Délimiter une zone (parc, jardin, forêt… ou même un étage de frigo) et la documenter de façon répétée, idéalement au quotidien, sur la durée.",
+      example:"Carré d’herbe 1m×1m : photos chaque jour, notes météo, traces, passage d’animaux, changements saisonniers ; fanzine final.",
+      proto:{
+        "Qui":"Toi ; éventuellement proches/élèves comme co-observateurs.",
+        "Quoi":"Évolutions d’un micro-territoire dans le temps (rythmes, typologies).",
+        "Comment":"Notes + photos + sons ; relecture régulière ; retour sur place pour préciser.",
+        "Combien":"Minimum 2 semaines (idéal : 1–3 mois).",
+        "Quand":"Rythme régulier (quotidien/2–3 fois semaine).",
+        "Où":"Zone strictement délimitée (frontière claire).",
+        "Pourquoi":"Comprendre les dynamiques temporelles et l’hyperlocal.",
+        "Pour quoi":"Fanzine / livret restituant le suivi + typologies/rythmes."
+      },
+      variants:"Variante : représentation multi-échelle (7 distances/points de vue d’un objet).",
+      tags:["suivi","temps long","hyperlocal","rythmes","fanzine"],
+      icon:"clock"
+    },
+    {
+      id:15, title:"Compilation thématique", cat:"suivi",
+      desc:"Constituer un dossier sur un thème suivi plusieurs mois (textes, images, sons, vidéos) en consultant des sources 2–3 fois par semaine et en annotant par mots-clés.",
+      example:"“Plastique” : extraits d’articles, stats, photos, pubs, posts d’experts ; chaque entrée taguée ; relectures hebdomadaires.",
+      proto:{
+        "Qui":"Toi (veilleur/collecteur).",
+        "Quoi":"Un thème + un corpus hétérogène (presse, académique, réseaux, littérature grise).",
+        "Comment":"Collecter/archiver ; annoter par tags ; relire ; organiser un “réservoir” de références.",
+        "Combien":"2–3 sessions/semaine pendant 1–2 mois (ou plus).",
+        "Quand":"Calendrier fixe (ex. lun/mer/ven).",
+        "Où":"Dossier numérique (ou papier) structuré.",
+        "Pourquoi":"Construire progressivement un point de vue informé ; repérer évolutions.",
+        "Pour quoi":"Dossier thématique + index de mots-clés + synthèse (1–2 pages)."
+      },
+      variants:"Variante : “commonplace book” (carnet de citations/notes) ou mini-newsletter interne.",
+      tags:["veille","dossier","sources","tags","synthèse"],
+      icon:"folder"
+    },
+    {
+      id:16, title:"Inventaire matériel", cat:"inv",
+      desc:"Choisir une pratique (cueillette, skateboard, tuning, permaculture…) et documenter les objets impliqués ; produire un diagramme-réseau des composants et relations.",
+      example:"Skate : board, trucks, roulements, spots, outils, vidéos, magasins ; relier “achat”, “réparation”, “style”, “usure”.",
+      proto:{
+        "Qui":"Toi + pratiquants (si possible).",
+        "Quoi":"Objets, lieux, usages, états, relations (visible/caché).",
+        "Comment":"Photos + notes + dessins ; inventaire ; diagramme avec flèches légendées.",
+        "Combien":"1–3 semaines de collecte ; 20 objets/éléments min.",
+        "Quand":"Pendant la pratique / après sessions.",
+        "Où":"Terrain de la pratique (domicile, atelier, spot).",
+        "Pourquoi":"Voir la culture matérielle d’une pratique et ses logiques.",
+        "Pour quoi":"Diagramme réseau + courte analyse."
+      },
+      variants:"Variante : relevé de détournements (objets bricolés/modifiés, nouvelle fonction).",
+      tags:["inventaire","objets","pratique","réseau","bricolage"],
+      icon:"network"
+    },
+    {
+      id:17, title:"Collecte idiomatique", cat:"lang",
+      desc:"Choisir un domaine que tu connais mal ; suivre 15–16 plusieurs semaines ; relever les mots/expressions inconnus ; fabriquer un lexique (abécédaire) accessible.",
+      example:"Jeu vidéo en ligne : DPS, nerf, meta, loot, matchmaking… définitions + exemples ; abécédaire illustré.",
+      proto:{
+        "Qui":"Toi ; éventuellement membres du milieu (pour vérifier le sens).",
+        "Quoi":"Jargon, métaphores, emprunts, expressions du groupe.",
+        "Comment":"Collecter mots inconnus ; chercher ; valider ; rédiger définitions simples + exemples.",
+        "Combien":"20–40 entrées minimum.",
+        "Quand":"Sur plusieurs semaines, au fil des observations/lectures.",
+        "Où":"Terrain + forums + dictionnaires + échanges.",
+        "Pourquoi":"Comprendre une pratique via sa langue ; saisir la logique des acteurs.",
+        "Pour quoi":"Lexique en abécédaire (1–3 pages, ou A4 recto-verso)."
+      },
+      variants:"Variante : patois local (10 mots/expressions + dessins + collecte auprès de personnes âgées).",
+      tags:["lexique","jargon","langage","abécédaire","patois"],
+      icon:"abc"
+    },
+    {
+      id:18, title:"Collecter / Classer", cat:"inv",
+      desc:"Choisir une chose à laquelle tu ne fais pas attention (panneaux, sacs à dos, graffitis…) ; documenter sur semaines ; identifier catégories ; produire une classification en poster.",
+      example:"Panneaux d’interdiction : formes, pictos, ton, emplacement ; familles (danger, circulation, incivilités, privatisation).",
+      proto:{
+        "Qui":"Toi ; éventuellement autres collecteurs pour diversifier.",
+        "Quoi":"Rencontres répétées avec le même type d’objet/signe.",
+        "Comment":"Photos/dessins + notes ; comparer ; créer catégories ; organiser un arbre/typologie.",
+        "Combien":"2–6 semaines ; 30 occurrences minimum.",
+        "Quand":"Pendant déplacements habituels.",
+        "Où":"Espace urbain (ou autre) ; zone(s) indiquées.",
+        "Pourquoi":"Apprendre par comparaison ; faire émerger structure et variations.",
+        "Pour quoi":"Poster de classification (familles/catégories) + légende."
+      },
+      variants:"Variantes : collecte d’objets (petits artefacts) ; comparaison culturelle (objets sur un site de vente d’une autre aire).",
+      tags:["classification","typologie","collection","comparaison","poster"],
+      icon:"tree"
+    },
+    {
+      id:19, title:"À vous (protocole personnel)", cat:"meta",
+      desc:"Définir un protocole pour chaque territoire nouveau visité ; constituer un “observatoire portatif” inspiré des exercices et préciser critères + format du rendu.",
+      example:"Voyage : 1) carte sensible du quartier ; 2) 5 micro-entretiens ; 3) inventaire de 12 objets ; 4) restitution en mini-fanzine.",
+      proto:{
+        "Qui":"Toi ; selon le protocole : passants/usagers/objets/lieux.",
+        "Quoi":"Un territoire nouveau (loin ou au coin de la rue).",
+        "Comment":"Assembler 2–4 méthodes ; définir règles (éthique, collecte, tri).",
+        "Combien":"1 protocole = 1 territoire (1–3 séances).",
+        "Quand":"Avant + pendant + après la visite (préparer / collecter / restituer).",
+        "Où":"Territoire choisi + espace de restitution.",
+        "Pourquoi":"Construire ta manière d’observer, renforcer ta capacité à remarquer.",
+        "Pour quoi":"Rendu explicite (poster/fanzine/carte/texte/site) + justification."
+      },
+      variants:"Variante : charte éthique (consentement, anonymisation, droit à l’image, diffusion limitée).",
+      tags:["méta","protocole","éthique","restitution","combinaison"],
+      icon:"toolbox"
     }
+  ];
+
+  /* =========================
+     Icônes (SVG noir/blanc)
+     ========================= */
+  function iconSVG(name){
+    const s = {
+      eye: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M15 60c18-28 45-40 65-40s47 12 65 40c-18 28-45 40-65 40S33 88 15 60z"/>
+          <circle cx="80" cy="60" r="16"/>
+          <circle cx="86" cy="56" r="4"/>
+        </svg>`,
+      footprints: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M55 85c6 0 12-6 12-18S61 40 55 40s-12 9-12 27 6 18 12 18z"/>
+          <path d="M92 92c6 0 12-6 12-18S98 47 92 47s-12 9-12 27 6 18 12 18z"/>
+          <path d="M40 96c10 6 22 6 34 0"/>
+          <path d="M77 103c10 6 22 6 34 0"/>
+          <path d="M47 34l-6-8M57 30l-2-10M67 34l4-8"/>
+          <path d="M84 41l-6-8M94 37l-2-10M104 41l4-8"/>
+        </svg>`,
+      map: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M20 30l40-12 40 12 40-12v72l-40 12-40-12-40 12z"/>
+          <path d="M60 18v72M100 30v72"/>
+          <path d="M40 58c10-16 28-16 38 0s28 16 42 0"/>
+        </svg>`,
+      object: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <rect x="46" y="26" width="68" height="68" rx="10"/>
+          <path d="M60 44h40M60 58h40M60 72h26"/>
+          <circle cx="104" cy="72" r="4"/>
+        </svg>`,
+      bubbles: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M22 30h72a10 10 0 0 1 10 10v22a10 10 0 0 1-10 10H60l-18 16v-16H22a10 10 0 0 1-10-10V40a10 10 0 0 1 10-10z"/>
+          <path d="M86 56h40a10 10 0 0 1 10 10v16a10 10 0 0 1-10 10h-18l-14 12v-12H86a10 10 0 0 1-10-10V66a10 10 0 0 1 10-10z"/>
+          <path d="M34 46h38M34 58h28"/>
+        </svg>`,
+      flow: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <rect x="18" y="18" width="44" height="24" rx="8"/>
+          <rect x="98" y="18" width="44" height="24" rx="8"/>
+          <rect x="58" y="70" width="44" height="24" rx="8"/>
+          <path d="M62 30h36"/>
+          <path d="M80 42v28"/>
+          <path d="M80 70l-8-8M80 70l8-8"/>
+        </svg>`,
+      gallery: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <rect x="18" y="22" width="124" height="76" rx="12"/>
+          <path d="M32 80l26-26 18 18 24-24 28 32"/>
+          <circle cx="54" cy="44" r="6"/>
+        </svg>`,
+      compare: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <rect x="18" y="24" width="56" height="72" rx="12"/>
+          <rect x="86" y="24" width="56" height="72" rx="12"/>
+          <path d="M34 44h24M34 60h18M34 76h28"/>
+          <path d="M102 44h24M102 60h18M102 76h28"/>
+          <path d="M74 60h12"/>
+        </svg>`,
+      book: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M30 26h48a14 14 0 0 1 14 14v58H44a14 14 0 0 0-14 14V26z"/>
+          <path d="M130 26H82a14 14 0 0 0-14 14v58h48a14 14 0 0 1 14 14V26z"/>
+          <path d="M48 44h28M48 58h20M92 44h28M92 58h20"/>
+        </svg>`,
+      handshake: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M26 66l22-22c8-8 20-8 28 0l4 4"/>
+          <path d="M134 66l-22-22c-8-8-20-8-28 0l-4 4"/>
+          <path d="M62 54l-12 12c-6 6-6 16 0 22 6 6 16 6 22 0l8-8"/>
+          <path d="M98 54l12 12c6 6 6 16 0 22-6 6-16 6-22 0l-8-8"/>
+          <path d="M72 74l16 16"/>
+        </svg>`,
+      route: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M40 18c10 20 0 30 0 46s10 26 20 26 20-10 20-26-10-26-20-26"/>
+          <path d="M100 18c-10 20 0 30 0 46s-10 26-20 26-20-10-20-26"/>
+          <path d="M40 18h60"/>
+          <path d="M78 44h4M78 60h4M78 76h4"/>
+        </svg>`,
+      warning: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M80 18l62 92H18z"/>
+          <path d="M80 50v26"/>
+          <path d="M80 88h.01"/>
+        </svg>`,
+      clock: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <circle cx="80" cy="60" r="42"/>
+          <path d="M80 60V38"/>
+          <path d="M80 60l20 12"/>
+          <path d="M52 18l-10 12M108 18l10 12"/>
+        </svg>`,
+      folder: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M20 36h48l12 12h60v52a12 12 0 0 1-12 12H32a12 12 0 0 1-12-12V36z"/>
+          <path d="M20 48h120"/>
+        </svg>`,
+      network: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <circle cx="40" cy="40" r="10"/>
+          <circle cx="120" cy="40" r="10"/>
+          <circle cx="80" cy="78" r="10"/>
+          <path d="M48 45l24 24M112 45L88 69M50 40h60"/>
+          <path d="M80 88v18"/>
+          <path d="M68 106h24"/>
+        </svg>`,
+      abc: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <rect x="34" y="18" width="92" height="84" rx="12"/>
+          <path d="M52 40l8-16 8 16M55 34h10"/>
+          <path d="M78 48V24h14c8 0 8 12 0 12H78"/>
+          <path d="M78 48h14c10 0 10 14 0 14H78"/>
+          <path d="M116 34c-4-6-18-6-18 6s14 12 18 6"/>
+          <path d="M52 72h60"/>
+          <path d="M52 86h44"/>
+        </svg>`,
+      tree: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <rect x="60" y="18" width="40" height="18" rx="8"/>
+          <path d="M80 36v18"/>
+          <rect x="26" y="54" width="40" height="18" rx="8"/>
+          <rect x="94" y="54" width="40" height="18" rx="8"/>
+          <path d="M80 54h-34M80 54h34"/>
+          <path d="M46 72v16M114 72v16"/>
+          <rect x="18" y="88" width="56" height="18" rx="8"/>
+          <rect x="86" y="88" width="56" height="18" rx="8"/>
+        </svg>`,
+      toolbox: `
+        <svg viewBox="0 0 160 120" aria-hidden="true">
+          <path d="M38 44h84a12 12 0 0 1 12 12v40H26V56a12 12 0 0 1 12-12z"/>
+          <path d="M56 44v-8a10 10 0 0 1 10-10h28a10 10 0 0 1 10 10v8"/>
+          <path d="M26 68h108"/>
+          <path d="M72 68v10h16V68"/>
+        </svg>`
+    };
+    return s[name] || s.object;
   }
 
-  function highlight(term){
-    if(!term) return 0;
-    const re = new RegExp(`(${escapeRegExp(term)})`, 'gi');
-    let total = 0;
+  function catBadge(catId){
+    const c = CATEGORIES.find(x=>x.id===catId);
+    const label = c ? c.label : "Catégorie";
+    const bg = (catId==="obs") ? "var(--cat-obs)"
+            : (catId==="inter") ? "var(--cat-inter)"
+            : (catId==="imm") ? "var(--cat-imm)"
+            : (catId==="parc") ? "var(--cat-parc)"
+            : (catId==="exp") ? "var(--cat-exp)"
+            : (catId==="suivi") ? "var(--cat-suivi)"
+            : (catId==="inv") ? "var(--cat-inv)"
+            : (catId==="lang") ? "var(--cat-lang)"
+            : "var(--cat-meta)";
+    return { label, bg };
+  }
 
-    for (const el of searchableBlocks){
-      // Work on current HTML (already reset before calling highlight)
-      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
-        acceptNode(node){
-          if(!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-          // Avoid highlighting inside script/style (none here, but safe)
-          const parentTag = node.parentElement?.tagName?.toLowerCase();
-          if(parentTag === 'script' || parentTag === 'style') return NodeFilter.FILTER_REJECT;
-          return NodeFilter.FILTER_ACCEPT;
-        }
-      });
+  /* =========================
+     Recherche + surlignage
+     ========================= */
+  const escapeHTML = (s) => (s ?? "").replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
 
-      const textNodes = [];
-      while(walker.nextNode()) textNodes.push(walker.currentNode);
+  function highlight(text, q){
+    const safe = escapeHTML(text);
+    if(!q) return safe;
+    const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, "ig");
+    return safe.replace(re, "<mark>$1</mark>");
+  }
 
-      for(const node of textNodes){
-        const text = node.nodeValue;
-        if(!re.test(text)) continue;
-        re.lastIndex = 0;
+  /* =========================
+     UI / Rendu
+     ========================= */
+  const grid = document.getElementById("grid");
+  const search = document.getElementById("search");
+  const clearBtn = document.getElementById("clearBtn");
+  const catMenu = document.getElementById("catMenu");
+  const nores = document.getElementById("nores");
+  const count = document.getElementById("count");
 
-        const frag = document.createDocumentFragment();
-        let last = 0;
-        let match;
-        while((match = re.exec(text)) !== null){
-          const start = match.index;
-          const end = start + match[0].length;
+  let activeCat = "all";
 
-          frag.appendChild(document.createTextNode(text.slice(last, start)));
-          const m = document.createElement('mark');
-          m.textContent = text.slice(start, end);
-          frag.appendChild(m);
-          total++;
-          last = end;
-        }
-        frag.appendChild(document.createTextNode(text.slice(last)));
-        node.parentNode.replaceChild(frag, node);
+  function renderCatMenu(){
+    catMenu.innerHTML = "";
+    CATEGORIES.forEach(c=>{
+      const btn = document.createElement("button");
+      btn.className = "catBtn" + (c.id===activeCat ? " active":"");
+      const dot = document.createElement("span");
+      dot.className = "catDot";
+
+      if(c.id==="all"){
+        dot.style.background = "rgba(255,255,255,.9)";
+      }else{
+        dot.style.background = `var(${c.dotVar})`;
       }
-    }
-    return total;
+      btn.appendChild(dot);
+      btn.appendChild(document.createTextNode(c.label));
+      btn.addEventListener("click", ()=>{
+        activeCat = c.id;
+        renderCatMenu();
+        render();
+      });
+      catMenu.appendChild(btn);
+    });
   }
 
-  function filter(){
-    const term = input.value.trim().toLowerCase();
-
-    // Reset highlights to keep DOM consistent
-    removeHighlights();
-
-    let matches = 0;
-
-    for(const card of cards){
-      const title = (card.getAttribute('data-title') || '').toLowerCase();
-      const text = card.innerText.toLowerCase();
-      const ok = !term || title.includes(term) || text.includes(term);
-      card.classList.toggle('hidden', !ok);
-    }
-
-    if(term){
-      matches = highlight(term);
-    }
-
-    const visible = cards.filter(c => !c.classList.contains('hidden')).length;
-    const label = term
-      ? `${matches} occurrence${matches>1?'s':''} • ${visible} exercice${visible>1?'s':''}`
-      : `0 résultat`;
-    countEl.textContent = label;
+  function matches(ex, q){
+    if(!q) return true;
+    const hay = [
+      ex.title, ex.desc, ex.example,
+      ex.variants,
+      (ex.tags||[]).join(" "),
+      Object.values(ex.proto||{}).join(" ")
+    ].join(" ").toLowerCase();
+    return hay.includes(q.toLowerCase());
   }
 
-  input.addEventListener('input', filter);
-  clearBtn.addEventListener('click', () => {
-    input.value = '';
-    removeHighlights();
-    cards.forEach(c => c.classList.remove('hidden'));
-    countEl.textContent = '0 résultat';
-    input.focus();
+  function render(){
+    const q = (search.value || "").trim();
+    const filtered = EX.filter(ex=>{
+      const catOk = (activeCat==="all" ? true : ex.cat===activeCat);
+      const qOk = matches(ex, q);
+      return catOk && qOk;
+    });
+
+    grid.innerHTML = "";
+    filtered.forEach(ex => grid.appendChild(card(ex, q)));
+
+    const total = filtered.length;
+    nores.style.display = total ? "none" : "block";
+
+    count.style.display = "block";
+    count.textContent = `${total} exercice(s) affiché(s) — Catégorie : ${CATEGORIES.find(c=>c.id===activeCat)?.label || "—"}`
+  }
+
+  function card(ex, q){
+    const c = document.createElement("article");
+    c.className = "card";
+
+    const badge = catBadge(ex.cat);
+
+    c.innerHTML = `
+      <div class="cardHeader">
+        <div class="titleBlock">
+          <div class="exNo">EXERCICE #${ex.id}</div>
+          <div class="exTitle">${highlight(ex.title, q)}</div>
+        </div>
+        <div class="badge" style="background:${badge.bg}">${badge.label}</div>
+      </div>
+
+      <div class="iconWrap">${iconSVG(ex.icon)}</div>
+
+      <div class="cardBody">
+        <p class="miniDesc">${highlight(ex.desc, q)}</p>
+
+        <details>
+          <summary>
+            Descriptif & exemple
+            <span class="chev" aria-hidden="true"></span>
+          </summary>
+          <div class="detailText">
+            <b>Descriptif :</b> ${highlight(ex.desc, q)}<br/>
+            <b>Exemple :</b> ${highlight(ex.example, q)}
+          </div>
+        </details>
+
+        <div class="actions">
+          <button class="btn btnPrimary" data-open="${ex.id}">Ouvrir l’exercice</button>
+          <button class="btn" data-copy="${ex.id}">Copier protocole</button>
+        </div>
+      </div>
+    `;
+
+    // Actions
+    c.querySelector("[data-open]")?.addEventListener("click", ()=> openModal(ex.id, q));
+    c.querySelector("[data-copy]")?.addEventListener("click", ()=> copyProto(ex.id));
+
+    return c;
+  }
+
+  /* =========================
+     Modal + contenu
+     ========================= */
+  const overlay = document.getElementById("overlay");
+  const closeBtn = document.getElementById("closeBtn");
+
+  const mTitle = document.getElementById("mTitle");
+  const mMeta  = document.getElementById("mMeta");
+  const mDesc  = document.getElementById("mDesc");
+  const mExample = document.getElementById("mExample");
+  const mProto = document.getElementById("mProto");
+  const mVar = document.getElementById("mVar");
+  const mTags = document.getElementById("mTags");
+
+  function openModal(id, q){
+    const ex = EX.find(x=>x.id===id);
+    if(!ex) return;
+
+    const badge = catBadge(ex.cat);
+
+    mTitle.innerHTML = `EXERCICE #${ex.id} — ${highlight(ex.title, q)}`;
+    mMeta.innerHTML = `Catégorie : <span class="badge" style="background:${badge.bg}; margin-left:.35rem;">${badge.label}</span>`;
+    mDesc.innerHTML = highlight(ex.desc, q);
+    mExample.innerHTML = highlight(ex.example, q);
+
+    // Protocole
+    const order = ["Qui","Quoi","Comment","Combien","Quand","Où","Pourquoi","Pour quoi"];
+    mProto.innerHTML = "";
+    order.forEach(k=>{
+      const v = ex.proto?.[k] ?? "—";
+      const kDiv = document.createElement("div");
+      kDiv.className = "k";
+      kDiv.textContent = k;
+      const vDiv = document.createElement("div");
+      vDiv.className = "v";
+      vDiv.innerHTML = highlight(String(v), q);
+      mProto.appendChild(kDiv);
+      mProto.appendChild(vDiv);
+    });
+
+    mVar.innerHTML = highlight(ex.variants || "—", q);
+    mTags.innerHTML = (ex.tags || []).map(t => `<span style="display:inline-block; margin:.2rem .25rem .2rem 0; padding:.25rem .5rem; border:1px solid var(--line); border-radius:999px; background:white; font-weight:800; font-size:.82rem;">${highlight(t, q)}</span>`).join("");
+
+    overlay.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal(){
+    overlay.style.display = "none";
+    document.body.style.overflow = "";
+  }
+
+  overlay.addEventListener("click", (e)=>{
+    if(e.target === overlay) closeModal();
+  });
+  closeBtn.addEventListener("click", closeModal);
+  document.addEventListener("keydown", (e)=>{
+    if(e.key==="Escape") closeModal();
   });
 
-  // Keyboard shortcut: Ctrl/Cmd + K to focus search
-  window.addEventListener('keydown', (e) => {
-    const isMac = navigator.platform.toUpperCase().includes('MAC');
-    if((isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === 'k'){
-      e.preventDefault();
-      input.focus();
+  /* =========================
+     Copier protocole (texte)
+     ========================= */
+  async function copyProto(id){
+    const ex = EX.find(x=>x.id===id);
+    if(!ex) return;
+    const order = ["Qui","Quoi","Comment","Combien","Quand","Où","Pourquoi","Pour quoi"];
+    let txt = `EXERCICE #${ex.id} — ${ex.title}\nCatégorie : ${catBadge(ex.cat).label}\n\n`;
+    txt += `Descriptif : ${ex.desc}\nExemple : ${ex.example}\n\n`;
+    order.forEach(k=>{
+      txt += `${k} : ${ex.proto?.[k] ?? "—"}\n`;
+    });
+    txt += `\nVariantes : ${ex.variants || "—"}\n`;
+    txt += `Mots-clés : ${(ex.tags||[]).join(", ")}\n`;
+
+    try{
+      await navigator.clipboard.writeText(txt);
+      toast("Protocole copié ✅");
+    }catch{
+      toast("Copie impossible (navigateur) — sélectionne et copie manuellement.");
     }
+  }
+
+  /* =========================
+     Petit toast
+     ========================= */
+  function toast(msg){
+    const el = document.createElement("div");
+    el.textContent = msg;
+    el.style.position = "fixed";
+    el.style.left = "50%";
+    el.style.bottom = "18px";
+    el.style.transform = "translateX(-50%)";
+    el.style.background = "#111827";
+    el.style.color = "white";
+    el.style.padding = ".6rem .85rem";
+    el.style.borderRadius = "999px";
+    el.style.fontWeight = "900";
+    el.style.boxShadow = "0 10px 28px rgba(0,0,0,.25)";
+    el.style.zIndex = "200";
+    document.body.appendChild(el);
+    setTimeout(()=>{ el.style.opacity="0"; el.style.transition="opacity .2s ease"; }, 1200);
+    setTimeout(()=>{ el.remove(); }, 1500);
+  }
+
+  /* =========================
+     Listeners
+     ========================= */
+  let t = null;
+  search.addEventListener("input", ()=>{
+    clearTimeout(t);
+    t = setTimeout(render, 90);
   });
+
+  clearBtn.addEventListener("click", ()=>{
+    search.value = "";
+    activeCat = "all";
+    renderCatMenu();
+    render();
+    search.focus();
+  });
+
+  // Init
+  renderCatMenu();
+  render();
 </script>
+
+<!--
+  ✅ GitHub Pages
+  1) Crée un dépôt (ex: methodes-enquete)
+  2) Mets ce fichier comme /index.html
+  3) Settings → Pages → Deploy from branch → main / root
+-->
 </body>
 </html>
