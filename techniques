@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Les techniques d’observation de la réalité</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1b33;
+      --card:#111f3a;
+      --text:#e8eefc;
+      --muted:#b7c4e3;
+      --border:rgba(232,238,252,.12);
+      --accent:#7dd3fc;
+      --warn:#fbbf24;
+      --ok:#86efac;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      background: radial-gradient(1200px 700px at 20% 0%, #122a5a 0%, var(--bg) 55%), var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,.8);
+      border-bottom:1px solid var(--border);
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:18px 16px;}
+    .top{
+      display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+      letter-spacing:.2px;
+    }
+    .source{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    .searchbar{
+      display:flex; gap:10px; align-items:center;
+      width:min(520px, 100%);
+      padding:10px;
+      background: rgba(17,31,58,.55);
+      border:1px solid var(--border);
+      border-radius:999px;
+      box-shadow: 0 8px 22px rgba(0,0,0,.25);
+    }
+    .searchbar input{
+      width:100%;
+      border:0;
+      outline:0;
+      background:transparent;
+      color:var(--text);
+      font-size:1rem;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:.85rem;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn{
+      border:1px solid var(--border);
+      background: rgba(125,211,252,.12);
+      color:var(--text);
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .btn:hover{background: rgba(125,211,252,.18)}
+    main{padding:22px 0 44px}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    .card{
+      background: rgba(17,31,58,.62);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardhead{
+      padding:16px 16px 10px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      border-bottom:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(134,239,172,.12);
+      border:1px solid rgba(134,239,172,.25);
+      color: var(--ok);
+      font-weight:700;
+      font-size:.82rem;
+      white-space:nowrap;
+    }
+    .titleblock h2{
+      margin:0;
+      font-size:1.15rem;
+    }
+    .subtitle{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    .content{padding:12px 16px 16px}
+    details{
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(15,27,51,.55);
+      padding:10px 12px;
+      margin:10px 0;
+    }
+    details[open]{background: rgba(15,27,51,.72)}
+    summary{
+      cursor:pointer;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-weight:800;
+      color:var(--text);
+    }
+    summary::-webkit-details-marker{display:none}
+    .chev{
+      width:28px; height:28px;
+      display:grid; place-items:center;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      flex:0 0 auto;
+    }
+    details[open] .chev{transform: rotate(180deg)}
+    .txt{
+      margin:10px 2px 2px;
+      color: var(--text);
+    }
+    .txt ul{margin:8px 0 0 18px}
+    .warn{
+      border:1px solid rgba(251,191,36,.28);
+      background: rgba(251,191,36,.10);
+    }
+    .warn summary{color: #ffe7a3}
+    mark{
+      background: rgba(125,211,252,.35);
+      color: var(--text);
+      padding: 0 .15em;
+      border-radius: .25em;
+    }
+    .hidden{display:none!important}
+    footer{
+      color:var(--muted);
+      font-size:.9rem;
+      border-top:1px solid var(--border);
+      padding-top:16px;
+      margin-top:22px;
+    }
+    @media (min-width: 880px){
+      .grid{gap:16px}
+      .cardhead{padding:18px 18px 12px}
+      .content{padding:14px 18px 18px}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Les techniques d’observation de la réalité</h1>
+        <div class="source">
+          Source : <strong>Exercices d’observation</strong>, Nicolas Nova, éditions <strong>Carnets Parallèles</strong> / <strong>La vie des choses</strong>
+        </div>
+      </div>
+
+      <div class="searchbar" role="search" aria-label="Recherche dans les exercices">
+        <span aria-hidden="true">🔎</span>
+        <input id="q" type="search" placeholder="Rechercher un mot-clé (ex : carte, sons, flux, 15 minutes…)" />
+        <span class="pill" id="count">0 résultat</span>
+        <button class="btn" id="clear" type="button">Effacer</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid" id="cards">
+
+    <!-- EX 1 -->
+    <article class="card exercise" data-title="(In)exhaustivité inventaire observation">
+      <div class="cardhead">
+        <div class="titleblock">
+          <h2>Exercice 1 — (In)exhaustivité</h2>
+          <p class="subtitle">Inventaire systématique de ce qui se déroule autour de vous (10 min) + liste structurée.</p>
+        </div>
+        <span class="badge">Observation fixe</span>
+      </div>
+      <div class="content searchable">
+        <details>
+          <summary>Qui ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li><strong>Observateur·rice 1</strong> : note le visuel.</li>
+              <li><strong>Observateur·rice 2</strong> : note le sonore (si travail à deux).</li>
+              <li><strong>Chronométreur·se</strong> : gère le temps et rappelle les règles (option).</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Quoi ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Entités (humains, animaux, plantes, objets, véhicules, infrastructures, écrits) + événements (mouvements, apparitions, disparitions, changements). Inclure banal et intrigant.
+          </div>
+        </details>
+
+        <details>
+          <summary>Comment ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Point fixe. Observation continue, phrases courtes. Séparer <strong>faits</strong> et <strong>interprétations</strong>. Organiser ensuite en colonnes (ex : VU / ENTENDU / MOUVEMENTS / ÉCRITS / INATTENDU).
+          </div>
+        </details>
+
+        <details>
+          <summary>Combien ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li><strong>10 minutes</strong> d’observation.</li>
+              <li><strong>30 éléments minimum</strong> dans la liste finale (idéal 40–60).</li>
+              <li>Individuel ou par 2–3 avec rôles.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Quand ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Noter la date et l’heure. Option : refaire au même endroit à un autre moment (comparaison).
+          </div>
+        </details>
+
+        <details>
+          <summary>Où ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Lieu choisi (classe, cour, hall, arrêt, parc…). Définir une zone : “champ de vision + sons” ou “rayon de X mètres”.
+          </div>
+        </details>
+
+        <details>
+          <summary>Pourquoi ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Entraîner l’attention et la description, apprendre à observer l’ordinaire, construire une base de données de terrain.
+          </div>
+        </details>
+
+        <details>
+          <summary>Pour quoi ? (production) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Tableau (≥30 entrées) + mini synthèse : régularités, surprises, limites de l’observation.
+          </div>
+        </details>
+
+        <details class="warn">
+          <summary>Points d’attention (mise en garde) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li>Rester discret : ne pas fixer les gens, ne pas “suivre” quelqu’un.</li>
+              <li>Ne pas noter de données personnelles identifiantes (nom, visage, détails sensibles).</li>
+              <li>Décrire des faits, éviter le jugement (“bizarre”, “louche”…).</li>
+              <li>Accepter l’inexhaustivité : on rate forcément des choses.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- EX 2 -->
+    <article class="card exercise" data-title="Série de questions curiosité questionnement">
+      <div class="cardhead">
+        <div class="titleblock">
+          <h2>Exercice 2 — Série de questions</h2>
+          <p class="subtitle">Observer un élément (objet, minéral, animal…) ~10 min, puis produire au moins 25 questions.</p>
+        </div>
+        <span class="badge">Curiosité</span>
+      </div>
+      <div class="content searchable">
+        <details><summary>Qui ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Individuel ou par 2 : un observe, l’autre écrit (puis on inverse si on veut).
+          </div>
+        </details>
+
+        <details><summary>Quoi ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Un seul élément concret : objet, trace, plante, pierre, infrastructure, etc.
+          </div>
+        </details>
+
+        <details><summary>Comment ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Observer (forme, état, matière, usages) puis écrire des <strong>questions uniquement</strong> (sans chercher à répondre). Varier : forme, fonction, origine, usage, devenir, environnement.
+          </div>
+        </details>
+
+        <details><summary>Combien ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li>Observation : ~10 min.</li>
+              <li>Production : 10–15 min.</li>
+              <li><strong>25 questions minimum</strong> (objectif 30–40).</li>
+            </ul>
+          </div>
+        </details>
+
+        <details><summary>Quand ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Noter date/heure et contexte (dehors, classe, forêt, musée…).
+          </div>
+        </details>
+
+        <details><summary>Où ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Lieu où l’élément se trouve (ou est observé). Préciser si l’élément est fixe/mobile.
+          </div>
+        </details>
+
+        <details><summary>Pourquoi ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Créer un “espace d’attention”, apprendre à problématiser avant d’expliquer.
+          </div>
+        </details>
+
+        <details><summary>Pour quoi ? (production) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Liste numérotée de questions + courte métaréflexion (les questions faciles/difficiles, ce que ça change dans ton regard).
+          </div>
+        </details>
+
+        <details class="warn"><summary>Points d’attention (mise en garde) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li>Ne pas basculer en “réponses” : rester dans le questionnement.</li>
+              <li>Éviter les questions intrusives si l’objet implique des personnes.</li>
+              <li>Accepter des questions “naïves” : elles sont souvent les meilleures.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- EX 3 -->
+    <article class="card exercise" data-title="Étude de parcours trajectoires carte déplacements">
+      <div class="cardhead">
+        <div class="titleblock">
+          <h2>Exercice 3 — Étude de parcours</h2>
+          <p class="subtitle">Observer 2–3 “sujets” et tracer leurs trajectoires sur une carte pendant ~15 min.</p>
+        </div>
+        <span class="badge">Cartographie</span>
+      </div>
+      <div class="content searchable">
+        <details><summary>Qui ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Un observe, un trace la carte (et un chronomètre, option). En solo : tout faire.
+          </div>
+        </details>
+
+        <details><summary>Quoi ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <strong>2–3 sujets</strong> (personnes/animaux) + leurs trajectoires : arrêts, changements de direction, zones fréquentées/évitées.
+          </div>
+        </details>
+
+        <details><summary>Comment ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Point de vue fixe. Dessiner d’abord l’espace (contours + éléments fixes), puis tracer les parcours avec une couleur/symbole par sujet (flèches = sens, points = arrêts). Donner un titre à la carte.
+          </div>
+        </details>
+
+        <details><summary>Combien ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li><strong>15 minutes</strong> d’observation.</li>
+              <li>1 carte principale (option : 2 séances pour comparer).</li>
+              <li>2–3 sujets maximum (sinon illisible).</li>
+            </ul>
+          </div>
+        </details>
+
+        <details><summary>Quand ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Noter date/heure + niveau de fréquentation (faible/moyen/fort) + météo si extérieur.
+          </div>
+        </details>
+
+        <details><summary>Où ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Lieu de flux : place, quai, centre commercial, cour, parc, prairie… avec une vue large.
+          </div>
+        </details>
+
+        <details><summary>Pourquoi ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Rendre visibles des rythmes et des usages de l’espace qui échappent à l’instantané.
+          </div>
+        </details>
+
+        <details><summary>Pour quoi ? (production) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Carte titrée et légendée + court commentaire : régularités, zones d’arrêt, influence du lieu, limites.
+          </div>
+        </details>
+
+        <details class="warn"><summary>Points d’attention (mise en garde) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li>Ne pas identifier les personnes : pas de détails personnels, pas de photos de visages.</li>
+              <li>Rester à distance, ne pas “suivre” physiquement : observation depuis un point fixe.</li>
+              <li>Le dessin simplifie : assumer que la carte est une interprétation.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- EX 4 -->
+    <article class="card exercise" data-title="Arpentages marche exploration plan carte sonore odeurs parcours">
+      <div class="cardhead">
+        <div class="titleblock">
+          <h2>Exercice 4 — Arpentages</h2>
+          <p class="subtitle">Déambulation dans un lieu délimité : relever impressions, limites, ouvertures, flux, puis produire un plan légendé.</p>
+        </div>
+        <span class="badge">Terrain</span>
+      </div>
+      <div class="content searchable">
+        <details><summary>Qui ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            En solo ou par groupe : arpenteur·se (marche), cartographe (plan), observateur·rice sensible (sons/odeurs), scribe (notes).
+          </div>
+        </details>
+
+        <details><summary>Quoi ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Un lieu bien délimité (quartier, parc, forêt, supermarché, appartement…). Organisation, objets, limites, ouvertures, flux, ambiances.
+          </div>
+        </details>
+
+        <details><summary>Comment ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Déambulation libre, arrêts fréquents, relevés (notes, dessins, photos si autorisées). Estimer grossièrement les dimensions. Produire un <strong>plan copieusement légendé</strong>.
+          </div>
+        </details>
+
+        <details><summary>Combien ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li>30–45 min (adaptable).</li>
+              <li>1 plan principal + légende + annotations.</li>
+              <li>Option comparaison : 2 passages (heures différentes).</li>
+            </ul>
+          </div>
+        </details>
+
+        <details><summary>Quand ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Noter date/heure/durée + fréquentation + météo (si pertinent).
+          </div>
+        </details>
+
+        <details><summary>Où ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Lieu choisi et ses limites. Décrire rapidement le type d’espace (transit, attente, loisir, commerce, nature…).
+          </div>
+        </details>
+
+        <details><summary>Pourquoi ? <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Mettre la pensée en mouvement : observer par le déplacement, saisir ambiances et usages, relier sensations et espace.
+          </div>
+        </details>
+
+        <details><summary>Pour quoi ? (production) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            Plan titré et légendé + court texte : ambiance dominante, zones attractives/évitées, ce que la marche révèle, limites.
+          </div>
+        </details>
+
+        <details><summary>Variantes (option) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li><strong>Carte sonore</strong> : localiser sons/phrases/bruits + intensité + répétitions.</li>
+              <li><strong>Carte d’odeurs</strong> : liste + intensité + source supposée + frise chronologique.</li>
+              <li><strong>Parcours à distance</strong> : arpentage sans déplacement (cartes, Street View, photos, récits).</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="warn"><summary>Points d’attention (mise en garde) <span class="chev">⌄</span></summary>
+          <div class="txt">
+            <ul>
+              <li>Respecter les lieux privés et les règles (photos/interdictions).</li>
+              <li>Ne pas collecter de données personnelles (visages, conversations identifiables).</li>
+              <li>La “carte sensible” assume la subjectivité : préciser votre point de vue et vos limites.</li>
+              <li>Sécurité : attention circulation, branches, obstacles, zones à risque.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <footer>
+      Astuce : la recherche filtre les exercices et surligne les occurrences dans les contenus ouverts/fermés.
+      (Les accordéons restent utilisables normalement.)
+    </footer>
+
+  </div>
+</main>
+
+<script>
+  const input = document.getElementById('q');
+  const clearBtn = document.getElementById('clear');
+  const countEl = document.getElementById('count');
+  const cards = Array.from(document.querySelectorAll('.exercise'));
+
+  // Store original HTML for highlight reset
+  const searchableBlocks = Array.from(document.querySelectorAll('.searchable'));
+  const originalHTML = new Map(searchableBlocks.map(el => [el, el.innerHTML]));
+
+  function escapeRegExp(str){
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function removeHighlights(){
+    for (const el of searchableBlocks){
+      el.innerHTML = originalHTML.get(el);
+    }
+  }
+
+  function highlight(term){
+    if(!term) return 0;
+    const re = new RegExp(`(${escapeRegExp(term)})`, 'gi');
+    let total = 0;
+
+    for (const el of searchableBlocks){
+      // Work on current HTML (already reset before calling highlight)
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+        acceptNode(node){
+          if(!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          // Avoid highlighting inside script/style (none here, but safe)
+          const parentTag = node.parentElement?.tagName?.toLowerCase();
+          if(parentTag === 'script' || parentTag === 'style') return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      const textNodes = [];
+      while(walker.nextNode()) textNodes.push(walker.currentNode);
+
+      for(const node of textNodes){
+        const text = node.nodeValue;
+        if(!re.test(text)) continue;
+        re.lastIndex = 0;
+
+        const frag = document.createDocumentFragment();
+        let last = 0;
+        let match;
+        while((match = re.exec(text)) !== null){
+          const start = match.index;
+          const end = start + match[0].length;
+
+          frag.appendChild(document.createTextNode(text.slice(last, start)));
+          const m = document.createElement('mark');
+          m.textContent = text.slice(start, end);
+          frag.appendChild(m);
+          total++;
+          last = end;
+        }
+        frag.appendChild(document.createTextNode(text.slice(last)));
+        node.parentNode.replaceChild(frag, node);
+      }
+    }
+    return total;
+  }
+
+  function filter(){
+    const term = input.value.trim().toLowerCase();
+
+    // Reset highlights to keep DOM consistent
+    removeHighlights();
+
+    let matches = 0;
+
+    for(const card of cards){
+      const title = (card.getAttribute('data-title') || '').toLowerCase();
+      const text = card.innerText.toLowerCase();
+      const ok = !term || title.includes(term) || text.includes(term);
+      card.classList.toggle('hidden', !ok);
+    }
+
+    if(term){
+      matches = highlight(term);
+    }
+
+    const visible = cards.filter(c => !c.classList.contains('hidden')).length;
+    const label = term
+      ? `${matches} occurrence${matches>1?'s':''} • ${visible} exercice${visible>1?'s':''}`
+      : `0 résultat`;
+    countEl.textContent = label;
+  }
+
+  input.addEventListener('input', filter);
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    removeHighlights();
+    cards.forEach(c => c.classList.remove('hidden'));
+    countEl.textContent = '0 résultat';
+    input.focus();
+  });
+
+  // Keyboard shortcut: Ctrl/Cmd + K to focus search
+  window.addEventListener('keydown', (e) => {
+    const isMac = navigator.platform.toUpperCase().includes('MAC');
+    if((isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === 'k'){
+      e.preventDefault();
+      input.focus();
+    }
+  });
+</script>
+</body>
+</html>
